@@ -17,7 +17,7 @@ Level * create_level(char * str){
         l->str[i] = malloc(sizeof(char * )* l->max_length);
     }
 
-    for (int i = 0; i < l->max_height; i++)
+    for (int i = 0; i < l->max_height; i++) // A TESTER (voir si les indices sont bons ou pas.)
     {
         int y = 0;
         while (str[i] != '\n') // tant qu'on est pas sur une fin de ligne
@@ -85,21 +85,25 @@ int max( int a, int b ){
     return b;
 }
 
-void show_level(){
-    for (int i = 0; i < 0; i++)
-    {
-        /* code */
-    }
+void show_level(Level * l){
+    // Affichage avec ncurses.
     
 }
 void update_adjacent(Level * level){
     
 }
-void show_level();
+
 void start_level(Level * l, Player * player){
     player->move = l->max_move;
 } 
 
-bool should_end(Player * player); // Si le niveau est terminé ou pas (objectifs complétés/ plus de coup)
+bool should_end(Level * l, Player * player){
+    return player->move <= 0; // Check si les points sont passés aussi
+}
 
-void end_level(Player * player);
+void end_level(Level * l, Player * player){
+
+    // Qu'est ce qu'on peut faire de plus ?s
+
+    free_Level(l);
+}
