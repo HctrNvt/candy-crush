@@ -8,7 +8,7 @@ typedef struct candy_h Candy;
 struct candy_manager
 {
     int colors[4][3]; // 4 couleurs en RGB
-    Speciality specialites[30];
+    Speciality * specialites;
 };
 typedef struct candy_manager CandyManager;
 

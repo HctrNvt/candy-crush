@@ -2,7 +2,7 @@
 
 Level create_level(char * str);
 void show_level(){
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < 0; i++)
     {
         /* code */
     }

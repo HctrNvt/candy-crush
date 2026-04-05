@@ -12,4 +12,10 @@ struct candy_h
 };
 typedef struct candy_h Candy;
 
+Candy * create_Candy(int x, int y, int r, int g, int b,
+     Candy * right, Candy * left, Candy * top, Candy * bot);
+
+void free_candy(Candy candy);
+
+
 #endif
