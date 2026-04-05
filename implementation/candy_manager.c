@@ -67,8 +67,18 @@ void fill_level(CandyManager * manager, Level * l){
     }
 }
 void make_candy_drop(CandyManager * manager, Level * level);
-void move( Level * level, int x, int y, int dx, int dy); // dx et dy compris entre -1 et 1
-void check_break(Level * level);
+
+// On suppose que le mouvement est possible
+void move( Level * level, int x, int y, int dx, int dy){
+    Candy origin = level->candies[x][y];
+    level->candies[x][y] = level->candies[x+dx][y+dy];
+    level->candies[x+dx][y+dy] = origin;
+}
+
+void check_break(Level * level){
+    // La complexité de zinzin qu'on va avoir sur ça.
+
+}
 
 void zebra_effect(Candy * candy, Level * level){
     // TODO
