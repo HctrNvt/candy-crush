@@ -26,8 +26,8 @@ CandyManager * create_CandyManager(){
     manager->specialites = malloc(sizeof(Speciality)*SPECIALITY_N);
     manager->specialites[0] = * create_Speciality('0',normal_effect);
     manager->specialites[1] = * create_Speciality('╬',zebra_effect);
-    manager->specialites[2] = * create_Speciality('╬',zebra_effect); // A terminer
-    manager->specialites[3] = * create_Speciality('╬',zebra_effect); // A terminer
+    manager->specialites[2] = * create_Speciality('#',carre_effect); // A terminer
+    manager->specialites[3] = * create_Speciality('@',disco_effect); // A terminer
 
     return manager;
 }
@@ -44,8 +44,13 @@ void free_CandyManager(CandyManager * manager){
     free(manager);
 }
 
-Candy * random_candy(CandyManager manager){
-    return create_Candy();
+Candy * random_candy(int x, int y, CandyManager * manager){
+    int color_index = rand() % 4;
+    int r = manager->colors[color_index][0];
+    int g = manager->colors[color_index][1];
+    int b = manager->colors[color_index][2];
+
+    return create_Candy(x,y,r,g,b,NULL,NULL,NULL,NULL);
 }
 void fill_level(CandyManager * manager, Level * level);
 void make_candy_drop(CandyManager * manager, Level * level);
