@@ -4,7 +4,7 @@
 struct player_h
 {
     int score;
-    int coup;
+    int move;
 };
 typedef struct player_h Player;
 bool can_move();

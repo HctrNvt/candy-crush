@@ -1,6 +1,9 @@
-#include "../header/candy_manager.h"
 #include <stdlib.h>
-#include "candy.c"
+
+#include "../header/candy_manager.h"
+#include "../header/speciality.h"
+#include "../header/candy.h"
+#include "../header/level.h"
 
 int SPECIALITY_N = 3;
 
@@ -52,7 +55,17 @@ Candy * random_candy(int x, int y, CandyManager * manager){
 
     return create_Candy(x,y,r,g,b,NULL,NULL,NULL,NULL);
 }
-void fill_level(CandyManager * manager, Level * level);
+
+// Ne se soucie pas de si le niveau contient déjà des bonbons ou non.
+void fill_level(CandyManager * manager, Level * l){
+    for (int i = 0; i < l->max_height; i++)
+    {
+        for (int j = 0; j < l->max_length; j++)
+        {
+            l->candies[i][j] = random_candy(i,j,manager);
+        }
+    }
+}
 void make_candy_drop(CandyManager * manager, Level * level);
 void move( Level * level, int x, int y, int dx, int dy); // dx et dy compris entre -1 et 1
 void check_break(Level * level);

@@ -1,9 +1,8 @@
-#ifndef CANDY_H
-#define CANDY_H
+#ifndef CANDY_MANAGER_H
+#define CANDY_MANAGER_H
 
-#include "speciality.h"
-
-typedef struct candy_h Candy;
+typedef struct speciality_h Speciality;
+typedef struct level_h Level;
 
 struct candy_manager
 {
