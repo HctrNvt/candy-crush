@@ -87,6 +87,11 @@ Level * create_level(char * str){
 void free_Level(Level * l){
     for (int i = 0; i < l->max_height; i++)
     {
+        for (int y = 0; y < l->max_length; y++)
+        {
+            free_Candy(&l->candies[i][y]);
+        }
+        
         free(l->candies[i]);
         free(l->str[i]);
     }

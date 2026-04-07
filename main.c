@@ -31,7 +31,6 @@ int main(int argc, char const *argv[])
     bool running = true;
     level_init();
 
-    
     endwin();
     return 0;
 }
