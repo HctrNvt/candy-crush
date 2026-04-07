@@ -5,6 +5,7 @@
 
 typedef struct candy_h Candy;
 typedef struct player_h Player;
+typedef struct candy_manager_h CandyManager;
 
 struct level_h
 {
@@ -19,7 +20,7 @@ typedef struct level_h Level;
 Level * create_level(char * str);
 void free_Level(Level * l);
 void update_adjacent(Level * level); // Met à jour les bonbons adjacents aux autres.
-void show_level(Level * l);
+void show_level(Level * l, CandyManager * m);
 void start_level(Level * l, Player * player); 
 // On donne le nombre de coup qu'il faut au joueur.
 bool should_end(Level * l, Player * player); // Si le niveau est terminé ou pas (objectifs complétés/ plus de coup)

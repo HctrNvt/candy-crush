@@ -2,17 +2,15 @@
 #include <stdlib.h>
 
 
-Candy * create_Candy(int x, int y, int r, int g, int b,
+Candy * create_Candy(int x, int y, int color,
      Candy * right, Candy * left, Candy * top, Candy * bot){
     
     Candy * self = malloc(sizeof(Candy));
     self->x = x;
     self->y = y;
 
-    self->r = r;
-    self->g = g;
-    self->b = b;
-
+    self->color = color;
+    
     self->bot = bot;
     self->left = left;
     self->top= top;

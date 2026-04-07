@@ -9,5 +9,5 @@ Speciality * create_Speciality(char c,void (*effect)(Candy * bonbon, Level * cur
 
 void free_Speciality(Speciality * s){
     free(s->effect);
-    free(s->symbol); // Est ce que c'est nécessaire ?
+    free(s);
 }
