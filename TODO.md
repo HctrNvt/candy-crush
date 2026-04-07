@@ -1,9 +1,3 @@
-Pour les cases 
-Stocker : 
-- 4 pointeurs pour les cases en haut bas droite gauche 
-- coordonnées de la case 
-- le bonbon sur la case
-
 Plusieurs parties:
 - Structuration des données 
 - Affichage & interface
@@ -13,3 +7,8 @@ Plusieurs parties:
 - Structure pour : bonbon (spécial ou non), niveau, curseur, manager de bonbon
 
 Implémenter tout 
+
+- [ ] Implémenter les bonbons spéciaux
+- [ ] Faire des tests sur les fonctions déjà faite
+- [ ] Terminer l'affichage
+- [ ] Faire les contrôles pour le curseur
