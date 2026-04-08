@@ -25,5 +25,7 @@ void start_level(Level * l, Player * player);
 // On donne le nombre de coup qu'il faut au joueur.
 bool should_end(Level * l, Player * player); // Si le niveau est terminé ou pas (objectifs complétés/ plus de coup)
 void end_level(Level * l,Player * player);
+// Retire le bonbon, ajoute les points au joueur, fais tomber les bonbons
+void break_candy(Level * l, Player * p, int x, int y);
 
 #endif
