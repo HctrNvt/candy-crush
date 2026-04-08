@@ -115,6 +115,10 @@ void update_adjacent(Level * level){
     
 }
 
+void break_candy(Level * l, Player * p, int x, int y){
+    
+}
+
 void start_level(Level * l, Player * player){
     player->move = l->max_move;
 } 
