@@ -70,7 +70,7 @@ void fill_level(CandyManager * manager, Level * l){
         }
     }
 }
-void make_candy_drop(CandyManager * manager, Level * level);
+void make_candy_drop(CandyManager * manager, Level * level); //on descends les bonbecs(#sable) et on génère des boncons alétoire (voir foncion random candy))
 
 // On suppose que le mouvement est possible
 void move_candies( Level * level, int x, int y, int dx, int dy){
