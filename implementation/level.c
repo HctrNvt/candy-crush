@@ -85,16 +85,16 @@ Level * create_level(char * str){
 }
 
 void free_Level(Level * l){
-    for (int i = 0; i < l->max_height; i++)
-    {
-        for (int y = 0; y < l->max_length; y++)
-        {
-            free_Candy(&l->candies[i][y]);
-        }
-        
-        free(l->candies[i]);
-        free(l->str[i]);
-    }
+    // for (int i = 0; i < l->max_height; i++)
+    // {
+    //     //for (int y = 0; y < l->max_length; y++)
+    //     //{
+    //     //    free_Candy(&l->candies[i][y]);
+    //     //}
+    //     
+    //     //free(l->candies[i]);
+    //     // free(l->str[i]);
+    // }
     free(l->candies);
     free(l->str);
     
@@ -107,9 +107,17 @@ void show_level(Level * l,CandyManager * m){
     for (int i = 0; i < 4; i++)
         init_pair(i,COLOR_BLACK,m->colors[i]);
     
-    attron(COLOR_PAIR(0));
-    printw("Tout ça en vrai ?");
-
+    for (int i = 0; i < l->max_height; i++)
+    {
+        for (int y = 0; y < l->max_length; y++)
+        {
+            attron(COLOR_PAIR((y+i)%4));
+            printw("%d",l->candies[i][y].color);
+        }
+        
+    }
+    
+    refresh();
 }
 void update_adjacent(Level * level){
     

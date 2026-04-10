@@ -27,10 +27,10 @@ int main(int argc, char const *argv[])
     keypad(stdscr, TRUE);
     curs_set(1);
 
-
-    bool running = true;
+    // bool running = true;
     level_init();
-
+    getch();
+    
     endwin();
     return 0;
 }

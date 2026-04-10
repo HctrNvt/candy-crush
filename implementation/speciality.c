@@ -1,10 +1,11 @@
 #include "../header/speciality.h"
 #include <stdlib.h>
 
-Speciality * create_Speciality(char c,void (*effect)(Candy * bonbon, Level * cur_level )){
+Speciality * create_Speciality(char c, void (*effect)(Candy * bonbon, Level * cur_level )){
     Speciality * s = malloc(sizeof(Speciality));
     s->symbol = c;
     s->effect = effect;
+    return s;
 }
 
 void free_Speciality(Speciality * s){

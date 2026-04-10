@@ -7,6 +7,8 @@
 
 #include <ncurses.h>
 
+// 
+
 int SPECIALITY_N = 3;
 
 void zebra_effect(Candy * candy, Level * level){
@@ -45,11 +47,6 @@ CandyManager * create_CandyManager(){
 void free_CandyManager(CandyManager * manager){
     if (manager == NULL) return;
     
-    for (int i = 0; i < SPECIALITY_N; i++) // Est ce que c'est nécessaire ?
-    {
-        free_Speciality(&(manager->specialites[i]));
-    }
-    
     free(manager->specialites);
     free(manager);
 }
@@ -57,7 +54,10 @@ void free_CandyManager(CandyManager * manager){
 Candy * random_candy(int x, int y, CandyManager * manager){
     int color = manager->colors[rand() % 4];
 
-    return create_Candy(x,y,color,NULL,NULL,NULL,NULL);
+    return create_Candy(x,y,
+        color,
+        NULL,NULL,NULL,NULL,
+        manager->specialites[0]);
 }
 
 // Ne se soucie pas de si le niveau contient déjà des bonbons ou non.

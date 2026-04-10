@@ -9,7 +9,7 @@ typedef struct candy_manager_h CandyManager;
 
 struct level_h
 {
-    char * * str;
+    char * * str; // Booléen à changer
     Candy * * candies;
     int max_height;
     int max_length;
