@@ -4,7 +4,9 @@ Plusieurs parties:
 - Interaction mécaniques en jeu
 
 Compiler : 
-gcc main.c ./implementation/candy_manager.c ./implementation/player.c ./implementation/speciality.c ./implementation/level.c ./implementation/candy.c -lncurses
+gcc main.c ./implementation/candy_manager.c ./implementation/player.c ./implementation/speciality.c ./implementation/level.c ./implementation/candy.c  -lncurses -Wall
+
+Voir *.c pour tout les fichiers dans un dossier
 
 
 # TODO

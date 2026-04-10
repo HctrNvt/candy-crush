@@ -9,7 +9,7 @@
 
 void level_init(){
     CandyManager * m = create_CandyManager();
-    Level * l = create_level("#####\n#####\n#####");
+    Level * l = create_level("###############\n###############\n###############\n###############\n###############\n###############");
     
     fill_level(m,l);
     

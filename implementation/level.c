@@ -2,6 +2,7 @@
 #include "../header/player.h"
 #include "../header/candy_manager.h"
 #include "../header/candy.h"
+#include "../header/speciality.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -111,10 +112,10 @@ void show_level(Level * l,CandyManager * m){
     {
         for (int y = 0; y < l->max_length; y++)
         {
-            attron(COLOR_PAIR((y+i)%4));
-            printw("%d",l->candies[i][y].color);
+            attron(COLOR_PAIR(l->candies[i][y]->color));
+            printw("%c",l->candies[i][y]->s->symbol);
         }
-        
+        printw("\n");
     }
     
     refresh();

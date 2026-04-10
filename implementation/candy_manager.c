@@ -9,7 +9,7 @@
 
 // 
 
-int SPECIALITY_N = 3;
+int SPECIALITY_N = 4;
 
 void zebra_effect(Candy * candy, Level * level){
     // TODO
@@ -52,12 +52,13 @@ void free_CandyManager(CandyManager * manager){
 }
 
 Candy * random_candy(int x, int y, CandyManager * manager){
-    int color = manager->colors[rand() % 4];
+    int color = rand() % 4; // l'index de la couleur dans le manager
+    Speciality * s = &(manager->specialites[0]);
 
     return create_Candy(x,y,
         color,
         NULL,NULL,NULL,NULL,
-        manager->specialites[0]);
+        s);
 }
 
 // Ne se soucie pas de si le niveau contient déjà des bonbons ou non.
@@ -66,15 +67,16 @@ void fill_level(CandyManager * manager, Level * l){
     {
         for (int j = 0; j < l->max_length; j++)
         {
-            l->candies[i][j] = * random_candy(i,j,manager);
+            l->candies[i][j] = random_candy(i,j,manager);
         }
     }
 }
+
 void make_candy_drop(CandyManager * manager, Level * level); //on descends les bonbecs(#sable) et on génère des boncons alétoire (voir foncion random candy))
 
 // On suppose que le mouvement est possible
 void move_candies( Level * level, int x, int y, int dx, int dy){
-    Candy origin = level->candies[x][y];
+    Candy * origin = level->candies[x][y];
     level->candies[x][y] = level->candies[x+dx][y+dy];
     level->candies[x+dx][y+dy] = origin;
 }
