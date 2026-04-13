@@ -72,7 +72,31 @@ void fill_level(CandyManager * manager, Level * l){
     }
 }
 
-void make_candy_drop(CandyManager * manager, Level * level); //on descends les bonbecs(#sable) et on génère des boncons alétoire (voir foncion random candy))
+bool is_filled(Level * l){
+    for (int i = 0; i < l->max_height; i++)
+    {
+        for (int j = 0; j < l->max_length; j++)
+        {
+            if(l->can_be_placed[i][j] && l->candies[i][j] == NULL)
+                return false;
+        }
+    }
+    return true;
+}
+
+// A TERMINER
+void make_candy_drop(CandyManager * manager, Level * level){
+    while (!is_filled(level))
+    {
+        
+        // On fait apparaitre les bonbons en haut
+        for (int i = 0; i < level->max_length; i++)
+            if (level->can_be_placed[i][0] && level->candies[i][0] == NULL)
+                    level->candies[i][0] = random_candy(i,0,manager);
+        
+    }
+    
+}; //on descends les bonbecs(#sable) et on génère des bonbons aléatoire (voir foncion random candy))
 
 // On suppose que le mouvement est possible
 void move_candies( Level * level, int x, int y, int dx, int dy){

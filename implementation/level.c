@@ -6,6 +6,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <ncurses.h>
 
 int max( int a, int b ){
@@ -41,7 +42,6 @@ int get_height(char * str){
     return max_height;
 }
 
-
 // ----
 
 Level * create_level(char * str){
@@ -49,11 +49,11 @@ Level * create_level(char * str){
     l->max_length = get_max_length(str);
     l->max_height = get_height(str);
     l->candies = malloc(sizeof(Candy * *) * l->max_height);
-    l->str = malloc(sizeof(char * ) * l->max_height);
+    l->can_be_placed = malloc(sizeof(char * ) * l->max_height);
     
     for (int i = 0; i < l->max_height; i++) {
         l->candies[i] = malloc(sizeof(Candy *) * l->max_length);
-        l->str[i] = malloc(sizeof(char) * l->max_length);
+        l->can_be_placed[i] = malloc(sizeof(char) * l->max_length);
     }
     
     int str_idx = 0;  // Index dans la string d'entrée
@@ -64,16 +64,17 @@ Level * create_level(char * str){
         // Parcourir la ligne jusqu'à '\n' ou fin de string
         while (str[str_idx] != '\n' && str[str_idx] != '\0') {
             if (str[str_idx] == '#') {
-                l->str[i][y] = '#';
+                l->can_be_placed[i][y] = true;
             } else {
-                l->str[i][y] = ' ';  // Utilise ' ' au lieu de NULL
+                l->can_be_placed[i][y] = false;
             }
             y++;
             str_idx++;
         }
         
+        // On remplit le reste du tableau
         while (y < l->max_length) {
-            l->str[i][y] = ' ';
+            l->can_be_placed[i][y] = false;
             y++;
         }
         
@@ -86,18 +87,15 @@ Level * create_level(char * str){
 }
 
 void free_Level(Level * l){
-    // for (int i = 0; i < l->max_height; i++)
-    // {
-    //     //for (int y = 0; y < l->max_length; y++)
-    //     //{
-    //     //    free_Candy(&l->candies[i][y]);
-    //     //}
-    //     
-    //     //free(l->candies[i]);
-    //     // free(l->str[i]);
-    // }
+    for (int i = 0; i < l->max_height; i++)
+    {
+        free(l->candies[i]);
+        free(l->can_be_placed[i]);
+    }
+    
+
     free(l->candies);
-    free(l->str);
+    free(l->can_be_placed);
     
     free(l);
 }
@@ -120,12 +118,15 @@ void show_level(Level * l,CandyManager * m){
     
     refresh();
 }
+
 void update_adjacent(Level * level){
     
 }
 
 void break_candy(Level * l, Player * p, int x, int y){
-    
+    Candy * c = l->candies[x][y];
+    p->score += c->s->points;
+    l->candies[x][y] = NULL; // bye bye
 }
 
 void start_level(Level * l, Player * player){
@@ -133,7 +134,7 @@ void start_level(Level * l, Player * player){
 } 
 
 bool should_end(Level * l, Player * player){
-    return player->move <= 0; // Check si les points sont passés aussi
+    return player->move <= 0;
 }
 
 void end_level(Level * l, Player * player){

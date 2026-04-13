@@ -8,9 +8,10 @@ Cursor * create_Cursor(int i, int j, int max_i, int max_j){
     c->j = j;
     c->max_i = max_i;
     c->max_j = max_j;
+    return c;
 }
 
-Cursor * free_Cursor(Cursor * c){
+void free_Cursor(Cursor * c){
     free(c);
 }
 
