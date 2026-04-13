@@ -36,10 +36,10 @@ CandyManager * create_CandyManager(){
 
     
     manager->specialites = malloc(sizeof(Speciality)*SPECIALITY_N);
-    manager->specialites[0] = * create_Speciality('0',normal_effect);
-    manager->specialites[1] = * create_Speciality('=',zebra_effect);
-    manager->specialites[2] = * create_Speciality('#',carre_effect); // A terminer
-    manager->specialites[3] = * create_Speciality('@',disco_effect); // A terminer
+    manager->specialites[0] = * create_Speciality('0',normal_effect,100);
+    manager->specialites[1] = * create_Speciality('=',zebra_effect,300);
+    manager->specialites[2] = * create_Speciality('#',carre_effect,300); // A terminer
+    manager->specialites[3] = * create_Speciality('@',disco_effect,1000); // A terminer
 
     return manager;
 }
