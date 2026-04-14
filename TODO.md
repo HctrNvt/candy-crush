@@ -6,8 +6,7 @@ Plusieurs parties:
 Compiler : 
 gcc *.c ./implementation/*.c  -lncurses -Wall
 
-Voir *.c pour tout les fichiers dans un dossier
-
+-fsanitize=address
 
 # TODO
 - Structure pour : bonbon (spécial ou non), niveau, curseur, manager de bonbon

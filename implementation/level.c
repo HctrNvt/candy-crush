@@ -45,8 +45,9 @@ int get_height(char * str){
 
 // ----
 
-Level * create_level(char * str){
+Level * create_level(char * str,int max_move){
     Level * l = malloc(sizeof(Level));
+    l->max_move = max_move;
     l->max_length = get_max_length(str);
     l->max_height = get_height(str);
     l->candies = malloc(sizeof(Candy * *) * l->max_height);
@@ -90,6 +91,11 @@ Level * create_level(char * str){
 void free_Level(Level * l){
     for (int i = 0; i < l->max_height; i++)
     {
+        for (int j = 0; j < l->max_length; j++)
+        {
+            free_Candy(l->candies[i][j]);
+        }
+        
         free(l->candies[i]);
         free(l->can_be_placed[i]);
     }
@@ -112,7 +118,7 @@ void show_level(Level * l,CandyManager * m, Cursor * c){
         {
             attron(COLOR_PAIR(l->candies[y][x]->color));
             if (c->i == x && c->j == y)
-                printw("+");
+                printw("~");
             else
                 printw("%c",l->candies[y][x]->s->symbol);
         }

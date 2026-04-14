@@ -44,7 +44,7 @@ CandyManager * create_CandyManager(){
 
 void free_CandyManager(CandyManager * manager){
     if (manager == NULL) return;
-    
+
     free(manager->specialites);
     free(manager);
 }
@@ -98,11 +98,25 @@ void make_candy_drop(CandyManager * manager, Level * level){
     
 }; 
 
-// On suppose que le mouvement est possible
-void move_candies( Level * level, int x, int y, int dx, int dy){
-    Candy * origin = level->candies[x][y];
-    level->candies[x][y] = level->candies[x+dx][y+dy];
+void move_candies(Level *level, int x, int y, int dx, int dy) {
+    // Vérification des limites et des pointeurs nuls
+    if (x+dx < 0 || y+dy < 0 || x+dx >= level->max_length || y+dy >= level->max_height)
+        return;
+
+    Candy *origin = level->candies[x][y];
+    Candy *target = level->candies[x+dx][y+dy];
+
+    level->candies[x][y] = target;
     level->candies[x+dx][y+dy] = origin;
+
+    if (target != NULL){
+        target->x = x;
+        target->y = y;
+    }
+    if (origin != NULL) {
+        origin->x = x+dx;
+        origin->y = y+dy;
+    }
 }
 
 // A modifier prendre en compte le mouvement qui a été fait (x,y) des deux bonbons échangés 

@@ -18,7 +18,7 @@ struct level_h
 };
 typedef struct level_h Level;
 
-Level * create_level(char * str);
+Level * create_level(char * str, int max_move);
 void free_Level(Level * l);
 void update_adjacent(Level * level); // Met à jour les bonbons adjacents aux autres.
 void show_level(Level * l, CandyManager * m, Cursor * c);
