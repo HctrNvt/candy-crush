@@ -4,7 +4,7 @@ Plusieurs parties:
 - Interaction mécaniques en jeu
 
 Compiler : 
-gcc *.c ./implementations/*.c  -lncurses -Wall
+gcc *.c ./implementation/*.c  -lncurses -Wall
 
 Voir *.c pour tout les fichiers dans un dossier
 

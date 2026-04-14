@@ -1,4 +1,5 @@
 #include "../header/cursor.h"
+#include "../header/level.h"
 #include <stdlib.h>
 
 
@@ -16,10 +17,9 @@ void free_Cursor(Cursor * c){
 }
 
 void move_Cursor(Cursor * cursor, int dx, int dy){
-    cursor->i += dx;
-    cursor->j += dy;
-}
+    if (cursor->i + dx >= 0 && cursor->i + dx < cursor->max_i)
+        cursor->i += dx;
 
-void show_Cursor(Cursor * c){
-
+    if (cursor->j + dy >= 0 && cursor->j + dy < cursor->max_j)
+        cursor->j += dy;
 }
