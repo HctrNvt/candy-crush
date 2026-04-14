@@ -88,6 +88,8 @@ bool is_filled(Level * l){
 void make_candy_drop(CandyManager * manager, Level * level){
     while (!is_filled(level))
     {
+        // On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
+        
         
         // On fait apparaitre les bonbons en haut
         for (int i = 0; i < level->max_length; i++)
