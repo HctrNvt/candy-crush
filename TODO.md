@@ -16,4 +16,5 @@ Implémenter tout
 - [ ] Implémenter les bonbons spéciaux
 - [ ] Faire des tests sur les fonctions déjà faite
 - [ ] Terminer l'affichage
+- [ ] Régler les bugs d'échanges de bonbons
 - [ ] Faire les contrôles pour le curseur
