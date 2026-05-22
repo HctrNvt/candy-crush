@@ -118,7 +118,7 @@ void show_level(Level * l,CandyManager * m, Cursor * c){
         {
             attron(COLOR_PAIR(l->candies[y][x]->color));
             if (c->i == x && c->j == y)
-                printw("~");
+                printw("+");
             else
                 printw("%c",l->candies[y][x]->s->symbol);
         }

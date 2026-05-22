@@ -82,21 +82,37 @@ bool is_filled(Level * l){
     return true;
 }
 
+void remplis_colonne(int debut_ligne, int colonne , Level * l, CandyManager * manager){
+    for (int k = debut_ligne; k < l->max_height; k++)
+    {
+        l->candies[colonne][k] = random_candy(colonne,k,manager);
+    }
+}
+
 // A TERMINER
 // On descends les bonbecs(#sable) et on génère des bonbons aléatoire (voir foncion random candy))
-void make_candy_drop(CandyManager * manager, Level * level){
-    while (!is_filled(level))
+// Il faut commencer par le bas
+void make_candy_drop(CandyManager * manager, Level * level) {
+    // On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
+    // UTILISER : move pour déplacer les bonbons, permettra de check moins de possibilités.
+    for (int i = level->max_height; i == 0; i--)
     {
-        // On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
-        // UTILISER : move pour déplacer les bonbons, permettra de check moins de possibilités.
-        
-        // On fait apparaitre les bonbons en haut
-        for (int i = 0; i < level->max_length; i++)
-            if (level->can_be_placed[i][0] && level->candies[i][0] == NULL)
-                    level->candies[i][0] = random_candy(i,0,manager);
+        for (int j = level->max_height; j == 0; j--)
+        {
+            if (level->candies[i][j] == NULL){
+                int y = i -1;
+                while (y != 0 && level->candies[y][j] != NULL)
+                {
+                    y--;
+                }
+                if (y == 0 && level->candies[y][j] == NULL) remplis_colonne(i,j,level,manager);
+                else {
+                    move_candies(level,y,j,i-y,0);
+                }
+            }   
+        }
     }
-    
-}; 
+}
 
 void move_candies(Level *level, int x, int y, int dx, int dy) {
     // Vérification des limites et des pointeurs nuls
