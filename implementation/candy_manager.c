@@ -132,9 +132,22 @@ void move_candies(Level *level, int x, int y, int dx, int dy) {
     }
 }
 
+// POUR MAHAUT
+
+void break_line_from(int start_i,int start_j,int n, Level * level, CandyManager * manager,Player * player){
+    for (int i = 0; i < n; i++)
+    {
+        break_candy(level,player,start_i,start_j);
+    }
+    
+}
+
+
+
+
 // A modifier prendre en compte le mouvement qui a été fait (x,y) des deux bonbons échangés 
 // Faire la vérification uniquement à partir de cet endroit la car ça réduit toute les possibilités.
-void check_break(Level * level){
+void check_break(Level * level, CandyManager * manager, Player * player){
 
 }
 

@@ -112,11 +112,22 @@ void show_level(Level * l,CandyManager * m, Cursor * c){
     {
         for (int x = 0; x < l->max_length; x++)
         {
-            attron(COLOR_PAIR(l->candies[y][x]->color+1)); // + 1 = on ne peut pas utiliser le i = 0
-            if (c->i == x && c->j == y)
-                printw("+");
-            else
-                printw("%c",l->candies[y][x]->s->symbol);
+            bool is_cursor = (c->i == x && c->j == y);
+            char symbol;
+            int color_pair;
+                    
+            if (l->candies[y][x] == NULL) {
+                color_pair = 0;
+                symbol = '¤';
+            } else {
+                color_pair = l->candies[y][x]->color + 1;
+                symbol = l->candies[y][x]->s->symbol;
+            }
+            
+            if (is_cursor) symbol = '+';
+            
+            attron(COLOR_PAIR(color_pair));
+            printw("%c", symbol);
         }
         printw("\n");
     }
