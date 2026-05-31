@@ -53,10 +53,7 @@ Candy * random_candy(int x, int y, CandyManager * manager){
     int color = rand() % 4; // l'index couleur dans le manager
     Speciality * s = &(manager->specialites[0]);
 
-    return create_Candy(x,y,
-        color,
-        NULL,NULL,NULL,NULL,
-        s);
+    return create_Candy(x,y,color,s);
 }
 
 // Remplace si bonbon existe déjà

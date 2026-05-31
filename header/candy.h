@@ -7,17 +7,10 @@ struct candy_h
 {
     int x; int y;
     int color;
-    Candy * right;
-    Candy * left;
-    Candy * top;
-    Candy * bot;
     Speciality * s;
 };
 
-Candy * create_Candy(int x, int y, int color,
-     Candy * right, Candy * left,
-      Candy * top, Candy * bot,
-    Speciality * s);
+Candy * create_Candy(int x, int y, int color, Speciality * s);
 
 void free_Candy(Candy * candy);
 

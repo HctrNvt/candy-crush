@@ -74,7 +74,7 @@
 
         start_color(); // Active les couleurs
         for (int i = 0; i < 4; i++)
-            init_pair(i+1,COLOR_BLACK,manager->colors[i]);
+            init_pair(i+1,COLOR_BLACK,manager->colors[i]); // Ne pas utiliser i = 0 : réserver pour le terminal...
 
         while (running)
         {
