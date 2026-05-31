@@ -132,7 +132,44 @@ void move_candies(Level *level, int x, int y, int dx, int dy) {
     }
 }
 
-// POUR MAHAUT
+void break_motif Level*l CandyManager * m {
+    motif_vert;
+    motif_horiz;
+    for (i = 0, i>n, i++){
+        for ( j = 0, j < n, j++){
+            motif_vert = 0;
+            motif_horiz = 0;
+            while (p.(j) = p(j+1)){
+                motif_horiz ++;
+                j++; }
+            while (p.(i) = p(i+1)){
+                motif_vert;
+                i++;
+             }
+            if ((motif_vert = 3)&&(motif_horiz = 3)){
+                break_line (int n, i, j);
+                //remplacer par bonbon magique associé
+                }
+            else if ((motif_vert = 3) || (motif_horiz = 3)){
+                break_line (int n, i, j);
+                //remplacer par bonbon magique associé
+                }
+            else if ((motif_vert = 4) || (motif_horiz = 4)){
+                break_line (int n, i, j);
+                //remplacer par bonbon magique associé
+                }
+             else if ((motif_vert = 5) || (motif_horiz = 5)){
+                break_line (int n, i, j);
+                //remplacer par bonbon magique associé
+                }
+            }
+            }
+Level
+}
+
+    
+
+
 
 // Casse la ligne depuis start_i inclu et fais n destruction en allant à DROITE
 void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player) {
