@@ -16,10 +16,11 @@ void free_Cursor(Cursor * c){
     free(c);
 }
 
-void move_Cursor(Cursor * cursor, int dx, int dy){
-    if (cursor->i + dx >= 0 && cursor->i + dx < cursor->max_i)
-        cursor->i += dx;
+bool est_entre(int x,int a,int b){
+    return x >= a && x <= b;
+}
 
-    if (cursor->j + dy >= 0 && cursor->j + dy < cursor->max_j)
-        cursor->j += dy;
+void move_Cursor(Cursor * cursor, int dx, int dy){
+    if (est_entre(cursor->i + dx, 0, cursor->max_i - 1)) cursor->i += dx;
+    if (est_entre(cursor->j + dy, 0, cursor->max_j - 1)) cursor->j += dy;
 }

@@ -119,11 +119,11 @@ void move_candies(Level *level, int x, int y, int dx, int dy) {
     if (x+dx < 0 || y+dy < 0 || x+dx >= level->max_length || y+dy >= level->max_height)
         return;
 
-    Candy *origin = level->candies[x][y];
-    Candy *target = level->candies[x+dx][y+dy];
+    Candy *origin = level->candies[y][x];
+    Candy *target = level->candies[y+dy][x+dx];
 
-    level->candies[x][y] = target;
-    level->candies[x+dx][y+dy] = origin;
+    level->candies[y][x] = target;
+    level->candies[y+dy][x+dx] = origin;
 
     if (target != NULL){
         target->x = x;

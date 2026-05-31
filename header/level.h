@@ -11,7 +11,7 @@ typedef struct cursor_h Cursor;
 struct level_h
 {
     bool * * can_be_placed; // Matrice de booléens
-    Candy * * * candies; // Matrice de pointeurs
+    Candy * * * candies; // Matrice de pointeurs de bonbons
     int max_height;
     int max_length;
     int max_move;
