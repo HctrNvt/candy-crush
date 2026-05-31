@@ -8,33 +8,46 @@
     #include "header/player.h"
     #include "header/candy_manager.h"
 
-    void move_to_input(int mv, Level * l, Cursor * c, Player * p){
+    void move_to_input(int mv, Level * l, Cursor * c, Player * p,bool * isMovingCandy, bool * isRUNNING){
         switch (mv)
         {
+            case 'a':
+                *isRUNNING = false;
+                break;
             case 's':
-                if (can_move(p)){
+                if (*isMovingCandy && can_move(p)){
                     p->move -= 1;
+                    *isMovingCandy = false;
                     move_candies(l,c->i,c->j,0,1);
-                }
+                } else 
+                    move_Cursor(c,0,1);
                 break;
             case 'z':
-                if (can_move(p)){
+                if (*isMovingCandy && can_move(p)){
                     p->move -= 1;
+                    *isMovingCandy = false;
                     move_candies(l,c->i,c->j,0,-1);
-                }
+                } else
+                    move_Cursor(c,0,-1);
                 break;
             case 'd':
-                if (can_move(p)){
+                if (*isMovingCandy && can_move(p)){
                     p->move -= 1;
+                    *isMovingCandy = false;
                     move_candies(l,c->i,c->j,1,0);
-                }
+                } else 
+                    move_Cursor(c,1,0);
                 break;
             case 'q':
-                if (can_move(p)){
+                if (*isMovingCandy && can_move(p)){
                     p->move -= 1;
+                    *isMovingCandy = false;
                     move_candies(l,c->i,c->j,-1,0);
-                }
+                } else 
+                    move_Cursor(c,-1,0);
                 break;
+            case ' ':
+                *isMovingCandy = true;
             default:
                 break;
         }
@@ -48,10 +61,11 @@
         curs_set(1);
 
         bool running = true;
+        bool isMovingCandy = false;
         CandyManager * m = create_CandyManager();
         char * l_str = "###################\n###################\n###################\n###################\n###################\n###################";
         Level * l = create_level(l_str,30);
-        Cursor * c = create_Cursor(2,3,l->max_length,l->max_height);
+        Cursor * c = create_Cursor(0,0,l->max_length,l->max_height);
         Player * p = create_Player(l);
         fill_level(m,l);
 
@@ -62,31 +76,9 @@
             refresh();
         
             int ch = getch(); // Attendre mv
-            switch (ch)
-            {
-                case 'a':
-                    running = false;
-                    break;
-                case 's':
-                    move_Cursor(c,0,1);
-                    break;
-                case 'z':
-                    move_Cursor(c,0,-1);
-                    break;
-                case 'd':
-                    move_Cursor(c,1,0);
-                    break;
-                case 'q':
-                    move_Cursor(c,-1,0);
-                    break;
-                case ' ': {
-                        int mv = getch();
-                    move_to_input(mv,l,c,p);
-                    break;
-                }
-                default:
-                    break;
-            }
+            move_to_input(ch,l,c,p,
+                &isMovingCandy,
+                &running);
         }
         
         endwin();
