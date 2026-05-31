@@ -107,16 +107,12 @@ void free_Level(Level * l){
     free(l);
 }
 
-void show_level(Level * l,CandyManager * m, Cursor * c){
-    start_color(); // Active les couleurs
-    for (int i = 0; i < 4; i++)
-        init_pair(i,COLOR_BLACK,m->colors[i]);
-    
+void show_level(Level * l,CandyManager * m, Cursor * c){    
     for (int y = 0; y < l->max_height; y++)
     {
         for (int x = 0; x < l->max_length; x++)
         {
-            attron(COLOR_PAIR(l->candies[y][x]->color));
+            attron(COLOR_PAIR(l->candies[y][x]->color+1)); // + 1 = on ne peut pas utiliser le i = 0
             if (c->i == x && c->j == y)
                 printw("+");
             else

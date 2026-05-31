@@ -10,15 +10,15 @@
 int SPECIALITY_N = 4;
 
 void zebra_effect(Candy * candy, Level * level){
-    // TODO
+    // TODO Elimine une ligne horizontale
 }
 
 void disco_effect(Candy * candy, Level * level){
-    // TODO
+    // TODO Elimine tous les bonbons de la même couleur
 }
 
 void carre_effect(Candy * candy, Level * level){
-    // TODO
+    // TODO // Elimine tous les bonbons autour
 }
 
 void normal_effect(Candy * candy, Level * level){

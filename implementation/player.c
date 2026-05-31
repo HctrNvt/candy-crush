@@ -13,6 +13,6 @@ void free_Player(Player * p){
     free(p);
 }
 
-bool can_move(Player * p){
+bool can_move_candy(Player * p){
     return p->move > 0;
 }
