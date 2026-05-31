@@ -3,18 +3,17 @@ Un clone minimaliste de Candy Crush réalisé en C avec ncurses
 
 ## Comment jouer 
 1. Sélectionner un bonbon
-Utilisez les flèches directionnelles pour déplacer le curseur jusqu'au bonbon que vous voulez échanger.
-  ↑ ↓ ← →
+Utilisez les touches z, q, s, d pour déplacer le curseur jusqu'au bonbon que vous voulez échanger.
 
 2. Appuyez sur ESPACE pour sélectionner le bonbon courant, puis :
 
 Appuyez sur ENTRÉE pour activer le mode échange
 Choisissez une direction (flèches directionnelles) pour échanger avec le bonbon adjacent :
 
-- ↑ : échange vers le haut
-- ↓ : échange vers le bas
-- ← : échange vers la gauche
-- → : échange vers la droite
+- z : échange vers le haut
+- s : échange vers le bas
+- q : échange vers la gauche
+- d : échange vers la droite
 
 Alignez 3 bonbons ou plus du même type horizontalement ou verticalement pour les faire exploser et gagner des points ! 💥
 # Les bonbons 

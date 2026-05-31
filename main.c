@@ -8,7 +8,7 @@
 #include "header/player.h"
 #include "header/candy_manager.h"
 
-void move_to_input(int mv, Level * l,Cursor * c,Player * p){
+void move_to_input(int mv, Level * l, Cursor * c, Player * p){
     switch (mv)
     {
         case 's':
