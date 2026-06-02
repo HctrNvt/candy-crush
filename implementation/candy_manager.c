@@ -9,181 +9,212 @@
 
 int SPECIALITY_N = 4;
 
-void zebra_effect(Candy * candy, Level * level){
+void zebra_effect(Candy *candy, Level *level)
+{
     // TODO Elimine une ligne horizontale
 }
 
-void disco_effect(Candy * candy, Level * level){
+void disco_effect(Candy *candy, Level *level)
+{
     // TODO Elimine tous les bonbons de la même couleur
 }
 
-void carre_effect(Candy * candy, Level * level){
+void carre_effect(Candy *candy, Level *level)
+{
     // TODO // Elimine tous les bonbons autour
 }
 
-void normal_effect(Candy * candy, Level * level){
+void normal_effect(Candy *candy, Level *level)
+{
     // A laisser vide
 }
 
-CandyManager * create_CandyManager(){
-    CandyManager * manager = malloc(sizeof(CandyManager));    
-    manager->colors[0] = COLOR_GREEN;  
-    manager->colors[1] = COLOR_YELLOW; 
-    manager->colors[2] = COLOR_BLUE;   
+CandyManager *create_CandyManager()
+{
+    CandyManager *manager = malloc(sizeof(CandyManager));
+    manager->colors[0] = COLOR_GREEN;
+    manager->colors[1] = COLOR_YELLOW;
+    manager->colors[2] = COLOR_BLUE;
     manager->colors[3] = COLOR_MAGENTA;
 
-    
-    manager->specialites = malloc(sizeof(Speciality)*SPECIALITY_N);
-    manager->specialites[0] = * create_Speciality('0',normal_effect,100);
-    manager->specialites[1] = * create_Speciality('=',zebra_effect,300); // A terminer
-    manager->specialites[2] = * create_Speciality('#',carre_effect,300); // A terminer
-    manager->specialites[3] = * create_Speciality('@',disco_effect,1000); // A terminer
+    manager->specialites = malloc(sizeof(Speciality) * SPECIALITY_N);
+    manager->specialites[0] = *create_Speciality('0', normal_effect, 100);
+    manager->specialites[1] = *create_Speciality('=', zebra_effect, 300);  // A terminer
+    manager->specialites[2] = *create_Speciality('#', carre_effect, 300);  // A terminer
+    manager->specialites[3] = *create_Speciality('@', disco_effect, 1000); // A terminer
 
     return manager;
 }
 
-void free_CandyManager(CandyManager * manager){
-    if (manager == NULL) return;
+void free_CandyManager(CandyManager *manager)
+{
+    if (manager == NULL)
+        return;
 
     free(manager->specialites);
     free(manager);
 }
 
-Candy * random_candy(int x, int y, CandyManager * manager){
+Candy *random_candy(int x, int y, CandyManager *manager)
+{
     int color = rand() % 4; // l'index couleur dans le manager
-    Speciality * s = &(manager->specialites[0]);
+    Speciality *s = &(manager->specialites[0]);
 
-    return create_Candy(x,y,color,s);
+    return create_Candy(x, y, color, s);
 }
 
 // Remplace si bonbon existe déjà
-void fill_level(CandyManager * manager, Level * l){
+void fill_level(CandyManager *manager, Level *l)
+{
     for (int i = 0; i < l->max_height; i++)
     {
         for (int j = 0; j < l->max_length; j++)
         {
-            l->candies[i][j] = random_candy(i,j,manager);
+            l->candies[i][j] = random_candy(i, j, manager);
         }
     }
 }
 
-bool is_filled(Level * l){
+bool is_filled(Level *l)
+{
     for (int i = 0; i < l->max_height; i++)
     {
         for (int j = 0; j < l->max_length; j++)
         {
-            if(l->can_be_placed[i][j] && l->candies[i][j] == NULL)
+            if (l->can_be_placed[i][j] && l->candies[i][j] == NULL)
                 return false;
         }
     }
     return true;
 }
 
-void remplis_colonne(int debut_ligne, int colonne , Level * l, CandyManager * manager){
+void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manager)
+{
     for (int k = debut_ligne; k < l->max_height; k++)
     {
-        l->candies[colonne][k] = random_candy(colonne,k,manager);
+        l->candies[colonne][k] = random_candy(colonne, k, manager);
     }
 }
 
 // A TERMINER
 // On descends les bonbecs(#sable) et on génère des bonbons aléatoire (voir foncion random candy))
 // Il faut commencer par le bas
-void make_candy_drop(CandyManager * manager, Level * level) {
+void make_candy_drop(CandyManager *manager, Level *level)
+{
     // On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
     // UTILISER : move pour déplacer les bonbons, permettra de check moins de possibilités.
     for (int i = level->max_height; i == 0; i--)
     {
         for (int j = level->max_height; j == 0; j--)
         {
-            if (level->candies[i][j] == NULL){
-                int y = i -1;
+            if (level->candies[i][j] == NULL)
+            {
+                int y = i - 1;
                 while (y != 0 && level->candies[y][j] != NULL)
                 {
                     y--;
                 }
-                if (y == 0 && level->candies[y][j] == NULL) remplis_colonne(i,j,level,manager);
-                else {
-                    move_candies(level,y,j,i-y,0);
+                if (y == 0 && level->candies[y][j] == NULL)
+                    remplis_colonne(i, j, level, manager);
+                else
+                {
+                    move_candies(level, y, j, i - y, 0);
                 }
-            }   
+            }
         }
     }
 }
 
-void move_candies(Level *level, int x, int y, int dx, int dy) {
+void move_candies(Level *level, int x, int y, int dx, int dy)
+{
     // Vérification des limites et des pointeurs nuls
-    if (x+dx < 0 || y+dy < 0 || x+dx >= level->max_length || y+dy >= level->max_height)
+    if (x + dx < 0 || y + dy < 0 || x + dx >= level->max_length || y + dy >= level->max_height)
         return;
 
     Candy *origin = level->candies[y][x];
-    Candy *target = level->candies[y+dy][x+dx];
+    Candy *target = level->candies[y + dy][x + dx];
 
     level->candies[y][x] = target;
-    level->candies[y+dy][x+dx] = origin;
+    level->candies[y + dy][x + dx] = origin;
 
-    if (target != NULL){
+    if (target != NULL)
+    {
         target->x = x;
         target->y = y;
     }
-    if (origin != NULL) {
-        origin->x = x+dx;
-        origin->y = y+dy;
+    if (origin != NULL)
+    {
+        origin->x = x + dx;
+        origin->y = y + dy;
     }
 }
 
-void break_motif Level*l CandyManager * m {
-    motif_vert;
-    motif_horiz;
-    for (i = 0, i>n, i++){
-        for ( j = 0, j < n, j++){
-            motif_vert = 0;
-            motif_horiz = 0;
-            while (p.(j) = p(j+1)){
-                motif_horiz ++;
-                j++; }
-            while (p.(i) = p(i+1)){
-                motif_vert;
-                i++;
-             }
-            if ((motif_vert = 3)&&(motif_horiz = 3)){
-                break_line (int n, i, j);
-                //remplacer par bonbon magique associé
-                }
-            else if ((motif_vert = 3) || (motif_horiz = 3)){
-                break_line (int n, i, j);
-                //remplacer par bonbon magique associé
-                }
-            else if ((motif_vert = 4) || (motif_horiz = 4)){
-                break_line (int n, i, j);
-                //remplacer par bonbon magique associé
-                }
-             else if ((motif_vert = 5) || (motif_horiz = 5)){
-                break_line (int n, i, j);
-                //remplacer par bonbon magique associé
-                }
-            }
-            }
-Level
-}
-
-    
-
-
-
 // Casse la ligne depuis start_i inclu et fais n destruction en allant à DROITE
-void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player) {
+void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
+{
     for (int i = 0; i < n; i++)
         break_candy(level, player, start_i + i, start_j);
 }
+
 // Casse la colonne depuis start_j et fais n destruction en allant vers le BAS
-void break_col_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player) {
+void break_col_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
+{
     for (int j = 0; j < n; j++)
         break_candy(level, player, start_i, start_j + j);
 }
 
-// ALLEZ MAHAUT !!!!!!!
-void check_break(Level * level, CandyManager * manager, Player * player){
+void check_break(Level *level, CandyManager *manager, Player *player)
+{
+    int motif_vert;
+    int motif_horiz;
+    for (int i = 0; i < level->max_length; i++)
+    {
+        for (int j = 0; j < level->max_height; j++)
+        {
+            motif_vert = 0;
+            motif_horiz = 0;
 
+            while (level->candies[i][j]->color = level->candies[i][j + 1]->color)
+            {
+                motif_horiz++;
+                j++;
+            }
+
+            while (level->candies[i][j]->color = level->candies[i + 1][j]->color)
+            {
+                motif_vert++;
+                i++;
+            }
+
+            if ((motif_vert = 3) && (motif_horiz = 3))
+            {
+                break_line_from(i, j, 3, level, manager, player);
+                break_col_from(i, j, 3, level, manager, player);
+                // remplacer par bonbon magique associé carré
+            }
+            else if ((motif_vert = 3))
+            {
+                break_col_from(i, j, 3, level, manager, player);
+            }
+            else if ((motif_horiz = 3))
+            {
+                break_line_from(i, j, 3, level, manager, player);
+            }
+            else if ((motif_vert = 4) || (motif_horiz = 4))
+            {
+                break_line(i, j, 4, level, manager, player);
+                // remplacer par bonbon magique associé zèbre
+            }
+            else if (motif_vert = 5)
+            {
+                break_col_from(i, j, 5, level, manager, player);
+                // Disco en i,j
+            }
+            else if (motif_horiz = 5)
+            {
+                break_line_from(i, j, 5, level, manager, player);
+                // Disco en i,j
+            }
+        }
+    }
 }
-

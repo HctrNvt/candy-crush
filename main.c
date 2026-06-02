@@ -8,36 +8,49 @@
 #include "header/player.h"
 #include "header/candy_manager.h"
 
-
-void handle_move(int dx, int dy, Level *level, Cursor *cursor, Player *player, bool *isMovingCandy) {
-    if (*isMovingCandy && can_move_candy(player)) {
+void handle_move(int dx, int dy, Level *level, Cursor *cursor, Player *player, bool *isMovingCandy)
+{
+    if (*isMovingCandy && can_move_candy(player))
+    {
         player->move -= 1;
         *isMovingCandy = false;
         move_candies(level, cursor->i, cursor->j, dx, dy);
-    } else {
+    }
+    else
+    {
         move_Cursor(cursor, dx, dy);
     }
 }
 
-void move_to_input(int mv, Level * level, Cursor * cursor, Player * player,bool * isMovingCandy, bool * isRUNNING){
+void move_to_input(int mv, Level *level, Cursor *cursor, Player *player, bool *isMovingCandy, bool *isRUNNING)
+{
     switch (mv)
     {
-        case 'a':
-            *isRUNNING = false;
-            break;
-        case 's': handle_move( 0,  1, level, cursor, player, isMovingCandy); break;
-        case 'z': handle_move( 0, -1, level, cursor, player, isMovingCandy); break;
-        case 'd': handle_move( 1,  0, level, cursor, player, isMovingCandy); break;
-        case 'q': handle_move(-1,  0, level, cursor, player, isMovingCandy); break;
-        case ' ':
-            *isMovingCandy = true;
-            break;
-        default:
-            break;
+    case 'a':
+        *isRUNNING = false;
+        break;
+    case 'z':
+        handle_move(0, -1, level, cursor, player, isMovingCandy);
+        break;
+    case 'q':
+        handle_move(-1, 0, level, cursor, player, isMovingCandy);
+        break;
+    case 's':
+        handle_move(0, 1, level, cursor, player, isMovingCandy);
+        break;
+    case 'd':
+        handle_move(1, 0, level, cursor, player, isMovingCandy);
+        break;
+    case ' ':
+        *isMovingCandy = true;
+        break;
+    default:
+        break;
     }
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[])
+{
     initscr();
     noecho();
     cbreak();
@@ -48,34 +61,35 @@ int main(int argc, char const *argv[]) {
     bool running = true;
     bool isMovingCandy = false;
 
-    CandyManager * manager = create_CandyManager();
-    char * level_str = "###################\n###################\n###################\n###################\n###################\n###################";
+    CandyManager *manager = create_CandyManager();
+    char *level_str = "###################\n###################\n###################\n###################\n###################\n###################";
 
-    Level * level = create_level(level_str,34);
-    Cursor * cursor = create_Cursor(0,0,level->max_length,level->max_height);
-    Player * player = create_Player(level);
+    Level *level = create_level(level_str, 34);
+    Cursor *cursor = create_Cursor(0, 0, level->max_length, level->max_height);
+    Player *player = create_Player(level);
 
-    fill_level(manager,level);
+    fill_level(manager, level);
 
     start_color(); // Active les couleurs
-    for (int i = 0; i < 4; i++){
-        init_pair(i+1,COLOR_BLACK,manager->colors[i]); // Ne pas utiliser i = 0 : réserver pour le terminal...
+    for (int i = 0; i < 4; i++)
+    {
+        init_pair(i + 1, COLOR_BLACK, manager->colors[i]); // Ne pas utiliser i = 0 : réserver pour le terminal...
     }
-    
+
     while (running)
     {
         clear();
         show_level(level, manager, cursor);
         refresh();
-    
+
         int ch = getch(); // Attendre mv
-        move_to_input(ch,level,cursor,player,
-            &isMovingCandy,
-            &running);
+        move_to_input(ch, level, cursor, player,
+                      &isMovingCandy,
+                      &running);
     }
-    
+
     endwin();
-    
+
     free_CandyManager(manager);
     free_Level(level);
     free_Cursor(cursor);
