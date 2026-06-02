@@ -96,13 +96,11 @@ void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manag
     }
 }
 
-// A TERMINER
-// On descends les bonbecs(#sable) et on génère des bonbons aléatoire (voir foncion random candy))
-// Il faut commencer par le bas
+// On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
+// UTILISER : move pour déplacer les bonbons, permettra de check moins de possibilités.
+
 void make_candy_drop(CandyManager *manager, Level *level)
 {
-    // On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
-    // UTILISER : move pour déplacer les bonbons, permettra de check moins de possibilités.
     for (int i = level->max_height; i == 0; i--)
     {
         for (int j = level->max_height; j == 0; j--)
@@ -192,18 +190,23 @@ void check_break(Level *level, CandyManager *manager, Player *player)
                 break_col_from(i, j, 3, level, manager, player);
                 // remplacer par bonbon magique associé carré
             }
-            else if ((motif_vert = 3))
+            else if (motif_vert = 3)
             {
                 break_col_from(i, j, 3, level, manager, player);
             }
-            else if ((motif_horiz = 3))
+            else if (motif_horiz = 3)
             {
                 break_line_from(i, j, 3, level, manager, player);
             }
-            else if ((motif_vert = 4) || (motif_horiz = 4))
+            else if (motif_vert = 4)
             {
-                break_line(i, j, 4, level, manager, player);
-                // remplacer par bonbon magique associé zèbre
+                break_col_from(i, j, 4, level, manager, player);
+                Candy zebre = random_candy(i, j, manager);
+                // zèbre
+            }
+            else if (motif_horiz = 4)
+            {
+                break_line_from(i, j, 4, level, manager, player);
             }
             else if (motif_vert = 5)
             {
