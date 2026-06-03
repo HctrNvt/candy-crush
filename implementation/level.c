@@ -72,28 +72,28 @@ Level *create_level(char *str, int max_move)
 
     for (int i = 0; i < l->max_height; i++)
     {
-        int y = 0;
+        int i = 0;
 
         // Parcourir la ligne jusqu'à '\n' ou fin de string
         while (str[str_idx] != '\n' && str[str_idx] != '\0')
         {
             if (str[str_idx] == '#')
             {
-                l->can_be_placed[i][y] = true;
+                l->can_be_placed[i][i] = true;
             }
             else
             {
-                l->can_be_placed[i][y] = false;
+                l->can_be_placed[i][i] = false;
             }
-            y++;
+            i++;
             str_idx++;
         }
 
         // On remplit le reste du tableau
-        while (y < l->max_length)
+        while (i < l->max_length)
         {
-            l->can_be_placed[i][y] = false;
-            y++;
+            l->can_be_placed[i][i] = false;
+            i++;
         }
 
         if (str[str_idx] == '\n')
@@ -126,23 +126,23 @@ void free_Level(Level *l)
 
 void show_level(Level *l, CandyManager *m, Cursor *c)
 {
-    for (int y = 0; y < l->max_height; y++)
+    for (int i = 0; i < l->max_height; i++)
     {
-        for (int x = 0; x < l->max_length; x++)
+        for (int j = 0; j < l->max_length; j++)
         {
-            bool is_cursor = (c->i == x && c->j == y);
+            bool is_cursor = (c->i == j && c->j == i);
             char symbol;
             int color_pair;
 
-            if (l->candies[y][x] == NULL)
+            if (l->candies[i][j] == NULL)
             {
-                color_pair = 0;
+                color_pair = 0; // Tester 6 vu que ça affiche pas du gris
                 symbol = '/';
             }
             else
             {
-                color_pair = l->candies[y][x]->color + 1;
-                symbol = l->candies[y][x]->s->symbol;
+                color_pair = l->candies[i][j]->color + 1;
+                symbol = l->candies[i][j]->s->symbol;
             }
 
             if (is_cursor)
@@ -161,13 +161,13 @@ void update_adjacent(Level *level)
 {
 }
 
-void break_candy(Level *l, Player *p, int x, int y)
+void break_candy(Level *l, Player *p, int i, int j)
 {
-    Candy *c = l->candies[y][x];
+    Candy *c = l->candies[i][j];
     p->score += c->s->points;
     c->s->effect(c, l);
     free_Candy(c);
-    l->candies[y][x] = NULL; // bye bye
+    l->candies[i][j] = NULL; // bye bye
 }
 
 void start_level(Level *l, Player *player)

@@ -2,11 +2,11 @@
 #include "../header/speciality.h"
 #include <stdlib.h>
 
-Candy *create_Candy(int x, int y, int color, Speciality *s)
+Candy *create_Candy(int i, int j, int color, Speciality *s)
 {
     Candy *self = malloc(sizeof(Candy));
-    self->x = x;
-    self->y = y;
+    self->i = i;
+    self->j = j;
 
     self->color = color;
     self->s = s;
