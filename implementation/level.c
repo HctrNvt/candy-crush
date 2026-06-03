@@ -59,47 +59,59 @@ Level *create_level(char *str, int max_move)
     l->max_move = max_move;
     l->max_length = get_max_length(str);
     l->max_height = get_height(str);
+
     l->candies = malloc(sizeof(Candy **) * l->max_height);
+    if (l->candies == NULL)
+    {
+        free(l);
+        return NULL;
+    }
+
     l->can_be_placed = malloc(sizeof(char *) * l->max_height);
+    if (l->can_be_placed == NULL)
+    {
+        free(l->candies);
+        free(l);
+        return NULL;
+    }
 
     for (int i = 0; i < l->max_height; i++)
     {
         l->candies[i] = malloc(sizeof(Candy *) * l->max_length);
         l->can_be_placed[i] = malloc(sizeof(char) * l->max_length);
+
+        for (int j = 0; j < l->max_length; j++)
+        {
+            l->candies[i][j] = NULL;
+            l->can_be_placed[i][j] = false;
+        }
     }
 
-    int str_idx = 0; // Index dans la string d'entrée
-
+    int str_idx = 0;
     for (int i = 0; i < l->max_height; i++)
     {
-        int i = 0;
+        int j = 0;
 
         // Parcourir la ligne jusqu'à '\n' ou fin de string
         while (str[str_idx] != '\n' && str[str_idx] != '\0')
         {
-            if (str[str_idx] == '#')
+            if (j < l->max_length)
             {
-                l->can_be_placed[i][i] = true;
+                l->can_be_placed[i][j] = (str[str_idx] == '#');
             }
-            else
-            {
-                l->can_be_placed[i][i] = false;
-            }
-            i++;
+            j++;
             str_idx++;
         }
 
-        // On remplit le reste du tableau
-        while (i < l->max_length)
+        // On remplit le reste de la ligne
+        while (j < l->max_length)
         {
-            l->can_be_placed[i][i] = false;
-            i++;
+            l->can_be_placed[i][j] = false;
+            j++;
         }
 
         if (str[str_idx] == '\n')
-        {
             str_idx++;
-        }
     }
 
     return l;
