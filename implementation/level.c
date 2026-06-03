@@ -163,10 +163,11 @@ void update_adjacent(Level *level)
 
 void break_candy(Level *l, Player *p, int x, int y)
 {
-    Candy *c = l->candies[x][y];
+    Candy *c = l->candies[y][x];
     p->score += c->s->points;
     c->s->effect(c, l);
-    l->candies[x][y] = NULL; // bye bye
+    free_Candy(c);
+    l->candies[y][x] = NULL; // bye bye
 }
 
 void start_level(Level *l, Player *player)

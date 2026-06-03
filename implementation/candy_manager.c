@@ -172,23 +172,25 @@ void check_break(Level *level, CandyManager *manager, Player *player)
 {
     int motif_vert;
     int motif_horiz;
-    for (int i = 0; i < level->max_length; i++)
+    for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < level->max_height; j++)
         {
             motif_vert = 0;
             motif_horiz = 0;
 
-            while (level->candies[i][j]->color == level->candies[i][j + 1]->color)
+            int a = 0;
+            while (level->candies[i][j]->color == level->candies[i][j + a]->color)
             {
                 motif_horiz++;
-                j++;
+                a++;
             }
 
-            while (level->candies[i][j]->color == level->candies[i + 1][j]->color)
+            a = 0;
+            while (level->candies[i][j]->color == level->candies[i + a][j]->color)
             {
                 motif_vert++;
-                i++;
+                a++;
             }
 
             if ((motif_vert == 3) && (motif_horiz == 3))
