@@ -130,7 +130,7 @@ void show_level(Level *l, CandyManager *m, Cursor *c)
     {
         for (int j = 0; j < l->max_length; j++)
         {
-            bool is_cursor = (c->i == j && c->j == i);
+            bool is_cursor = (c->i == i && c->j == j);
             char symbol;
             int color_pair;
 
@@ -150,6 +150,7 @@ void show_level(Level *l, CandyManager *m, Cursor *c)
 
             attron(COLOR_PAIR(color_pair));
             printw("%c", symbol);
+            attroff(COLOR_PAIR(color_pair));
         }
         printw("\n");
     }

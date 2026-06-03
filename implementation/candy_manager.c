@@ -107,58 +107,60 @@ void make_candy_drop(CandyManager *manager, Level *level)
         {
             if (level->candies[i][j] == NULL)
             {
-                int y = i - 1;
-                while (y != 0 && level->candies[y][j] != NULL)
+                int j = i - 1;
+                while (j != 0 && level->candies[j][j] != NULL)
                 {
-                    y--;
+                    j--;
                 }
-                if (y == 0 && level->candies[y][j] == NULL)
+                if (j == 0 && level->candies[j][j] == NULL)
                     remplis_colonne(i, j, level, manager);
                 else
                 {
-                    move_candies(level, y, j, i - y, 0);
+                    move_candies(level, j, j, i - j, 0);
                 }
             }
         }
     }
 }
 
-void move_candies(Level *level, int x, int y, int dx, int dy)
+void move_candies(Level *level, int i, int j, int di, int dj)
 {
     // Vérification des limites et des pointeurs nuls
-    if (x + dx < 0 || y + dy < 0 || x + dx >= level->max_length || y + dy >= level->max_height)
+    if (i + di < 0 || j + dj < 0 || i + di >= level->max_length || j + dj >= level->max_height)
         return;
 
-    Candy *origin = level->candies[y][x];
-    Candy *target = level->candies[y + dy][x + dx];
+    Candy *origin = level->candies[j][i];
+    Candy *target = level->candies[j + dj][i + di];
 
-    level->candies[y][x] = target;
-    level->candies[y + dy][x + dx] = origin;
+    level->candies[j][i] = target;
+    level->candies[j + dj][i + di] = origin;
 
     if (target != NULL)
     {
-        target->x = x;
-        target->y = y;
+        target->i = i;
+        target->j = j;
     }
     if (origin != NULL)
     {
-        origin->x = x + dx;
-        origin->y = y + dy;
+        origin->i = i + di;
+        origin->j = j + dj;
     }
 }
 
 // Casse la ligne depuis start_i inclu et fais n destruction en allant à DROITE
 void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
 {
-    for (int i = 0; i < n; i++)
-        break_candy(level, player, start_i, start_j + i);
+    for (int j = 0; j < n; j++)
+        if (level->candies[start_i][start_j + j] != NULL)
+            break_candy(level, player, start_i, start_j + j);
 }
 
 // Casse la colonne depuis start_j et fais n destruction en allant vers le BAS
 void break_col_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
 {
-    for (int j = 0; j < n; j++)
-        break_candy(level, player, start_i + j, start_j);
+    for (int i = 0; i < n; i++)
+        if (level->candies[start_i + i][start_j] != NULL)
+            break_candy(level, player, start_i + i, start_j);
 }
 
 void set_candy(int i, int j, Speciality *s, CandyManager *manager, Level *level)
@@ -181,6 +183,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
 
             int a = 0;
             while (j + a < level->max_height &&
+                   level->candies[i][j + a] != NULL &&
                    level->candies[i][j]->color == level->candies[i][j + a]->color)
             {
                 motif_horiz++;
@@ -189,6 +192,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
 
             a = 0;
             while (i + a < level->max_length &&
+                   level->candies[i + a][j] != NULL &&
                    level->candies[i][j]->color == level->candies[i + a][j]->color)
             {
                 motif_vert++;
@@ -203,7 +207,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             else if (motif_horiz >= 5)
             {
                 break_line_from(i, j, motif_horiz, level, manager, player);
-                set_candy(i, j, &manager->specialites[5], manager, level);
+                set_candy(i, j, &manager->specialites[4], manager, level);
             }
             else if (motif_vert >= 4)
             {
