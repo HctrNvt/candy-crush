@@ -137,7 +137,7 @@ void show_level(Level *l, CandyManager *m, Cursor *c)
             if (l->candies[y][x] == NULL)
             {
                 color_pair = 0;
-                symbol = '¤';
+                symbol = '/';
             }
             else
             {
@@ -165,7 +165,7 @@ void break_candy(Level *l, Player *p, int x, int y)
 {
     Candy *c = l->candies[x][y];
     p->score += c->s->points;
-    
+    c->s->effect(c, l);
     l->candies[x][y] = NULL; // bye bye
 }
 

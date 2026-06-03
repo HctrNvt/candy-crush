@@ -8,13 +8,14 @@
 #include "header/player.h"
 #include "header/candy_manager.h"
 
-void handle_move(int dx, int dy, Level *level, Cursor *cursor, Player *player, bool *isMovingCandy)
+void handle_move(int dx, int dy, Level *level, Cursor *cursor, Player *player, bool *isMovingCandy, CandyManager *m)
 {
     if (*isMovingCandy && can_move_candy(player))
     {
         player->move -= 1;
         *isMovingCandy = false;
         move_candies(level, cursor->i, cursor->j, dx, dy);
+        check_break(level, m, player);
     }
     else
     {
@@ -22,7 +23,7 @@ void handle_move(int dx, int dy, Level *level, Cursor *cursor, Player *player, b
     }
 }
 
-void move_to_input(int mv, Level *level, Cursor *cursor, Player *player, bool *isMovingCandy, bool *isRUNNING)
+void move_to_input(int mv, Level *level, Cursor *cursor, Player *player, bool *isMovingCandy, bool *isRUNNING, CandyManager *m)
 {
     switch (mv)
     {
@@ -30,16 +31,16 @@ void move_to_input(int mv, Level *level, Cursor *cursor, Player *player, bool *i
         *isRUNNING = false;
         break;
     case 'z':
-        handle_move(0, -1, level, cursor, player, isMovingCandy);
+        handle_move(0, -1, level, cursor, player, isMovingCandy, m);
         break;
     case 'q':
-        handle_move(-1, 0, level, cursor, player, isMovingCandy);
+        handle_move(-1, 0, level, cursor, player, isMovingCandy, m);
         break;
     case 's':
-        handle_move(0, 1, level, cursor, player, isMovingCandy);
+        handle_move(0, 1, level, cursor, player, isMovingCandy, m);
         break;
     case 'd':
-        handle_move(1, 0, level, cursor, player, isMovingCandy);
+        handle_move(1, 0, level, cursor, player, isMovingCandy, m);
         break;
     case ' ':
         *isMovingCandy = true;
@@ -85,7 +86,8 @@ int main(int argc, char const *argv[])
         int ch = getch(); // Attendre mv
         move_to_input(ch, level, cursor, player,
                       &isMovingCandy,
-                      &running);
+                      &running,
+                      manager);
     }
 
     endwin();

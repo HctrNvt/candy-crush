@@ -161,6 +161,13 @@ void break_col_from(int start_i, int start_j, int n, Level *level, CandyManager 
         break_candy(level, player, start_i, start_j + j);
 }
 
+void set_candy(int i, int j, Speciality *s, CandyManager *manager, Level *level)
+{
+    Candy *bonbon = random_candy(i, j, manager);
+    bonbon->s = s;
+    level->candies[i][j] = bonbon;
+}
+
 void check_break(Level *level, CandyManager *manager, Player *player)
 {
     int motif_vert;
@@ -172,51 +179,51 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             motif_vert = 0;
             motif_horiz = 0;
 
-            while (level->candies[i][j]->color = level->candies[i][j + 1]->color)
+            while (level->candies[i][j]->color == level->candies[i][j + 1]->color)
             {
                 motif_horiz++;
                 j++;
             }
 
-            while (level->candies[i][j]->color = level->candies[i + 1][j]->color)
+            while (level->candies[i][j]->color == level->candies[i + 1][j]->color)
             {
                 motif_vert++;
                 i++;
             }
 
-            if ((motif_vert = 3) && (motif_horiz = 3))
+            if ((motif_vert == 3) && (motif_horiz == 3))
             {
                 break_line_from(i, j, 3, level, manager, player);
                 break_col_from(i, j, 3, level, manager, player);
-                // remplacer par bonbon magique associé carré
+                set_candy(i, j, &manager->specialites[2], manager, level);
             }
-            else if (motif_vert = 3)
+            else if (motif_vert == 3)
             {
                 break_col_from(i, j, 3, level, manager, player);
             }
-            else if (motif_horiz = 3)
+            else if (motif_horiz == 3)
             {
                 break_line_from(i, j, 3, level, manager, player);
             }
-            else if (motif_vert = 4)
+            else if (motif_vert == 4)
             {
                 break_col_from(i, j, 4, level, manager, player);
-                Candy zebre = random_candy(i, j, manager);
-                // zèbre
+                set_candy(i, j, &manager->specialites[1], manager, level);
             }
-            else if (motif_horiz = 4)
+            else if (motif_horiz == 4)
             {
                 break_line_from(i, j, 4, level, manager, player);
+                set_candy(i, j, &manager->specialites[1], manager, level);
             }
-            else if (motif_vert = 5)
+            else if (motif_vert == 5)
             {
                 break_col_from(i, j, 5, level, manager, player);
-                // Disco en i,j
+                set_candy(i, j, &manager->specialites[3], manager, level);
             }
-            else if (motif_horiz = 5)
+            else if (motif_horiz == 5)
             {
                 break_line_from(i, j, 5, level, manager, player);
-                // Disco en i,j
+                set_candy(i, j, &manager->specialites[5], manager, level);
             }
         }
     }

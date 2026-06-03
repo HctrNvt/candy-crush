@@ -12,8 +12,8 @@ struct player_h
 };
 typedef struct player_h Player;
 
-Player * create_Player(Level * l);
-void free_Player(Player * p);
-bool can_move_candy(Player * p);
+Player *create_Player(Level *l);
+void free_Player(Player *p);
+bool can_move_candy(Player *p);
 
 #endif
