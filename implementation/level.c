@@ -173,11 +173,15 @@ void show_level(Level *l, CandyManager *m, Cursor *c)
 
 void break_candy(Level *l, Player *p, int i, int j)
 {
+    if (l->candies[i][j] == NULL)
+        return;
     Candy *candy = l->candies[i][j];
-    p->score += candy->s->points;
-    candy->s->effect(candy, l); // On applique l'effet du bonbon détruit sur les cellules.
-    free_Candy(candy);
     l->candies[i][j] = NULL; // bye bye
+
+    p->score += candy->s->points;
+
+    candy->s->effect(candy, l, p, i, j); // Applique l'effet du bonbon détruit.
+    free_Candy(candy);
 }
 
 void start_level(Level *l, Player *player)

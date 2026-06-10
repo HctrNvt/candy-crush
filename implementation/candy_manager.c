@@ -9,22 +9,33 @@
 
 int SPECIALITY_N = 4;
 
-void zebra_effect(Candy *candy, Level *level)
+void zebra_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
-    // TODO Elimine une ligne horizontale
+    for (int n = 0; n < level->max_length; n++)
+    {
+        break_candy(level, player, i, n);
+    }
 }
 
-void disco_effect(Candy *candy, Level *level)
+void disco_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
-    // TODO Elimine tous les bonbons de la même couleur
+    int color = candy->color;
+    for (int x = 0; x < level->max_height; x++)
+    {
+        for (int y = 0; y < level->max_length; y++)
+        {
+            if (level->candies[x][y]->color == color)
+                break_candy(level, player, x, y);
+        }
+    }
 }
 
-void carre_effect(Candy *candy, Level *level)
+void carre_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
     // TODO // Elimine tous les bonbons autour
 }
 
-void normal_effect(Candy *candy, Level *level)
+void normal_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
     // A laisser vide
 }
@@ -90,9 +101,9 @@ bool is_filled(Level *l)
 
 void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manager)
 {
-    for (int k = debut_ligne; k < l->max_height; k++)
+    for (int k = debut_ligne; k >= 0; k--) // En remontant
     {
-        l->candies[colonne][k] = random_candy(colonne, k, manager);
+        l->candies[k][colonne] = random_candy(k, colonne, manager);
     }
 }
 
@@ -115,10 +126,11 @@ void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor)
                 if (k < 0)
                     remplis_colonne(i, j, level, manager);
                 else
-                    move_candies(level, j, j, i - j, 0, manager, cursor);
+                    move_candies(level, k, j, i - k, 0, manager, cursor);
             }
         }
     }
+    show_level(level, manager, cursor);
 }
 
 void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *manager, Cursor *cursor)
