@@ -60,7 +60,7 @@ Candy *random_candy(int i, int j, CandyManager *manager)
     int color = rand() % 4; // l'index couleur dans le manager
     Speciality *s = &(manager->specialites[0]);
 
-    return create_Candy(i, j, color, s);
+    return create_Candy(color, s);
 }
 
 // Remplace si bonbon existe déjà
@@ -101,23 +101,21 @@ void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manag
 
 void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor)
 {
-    for (int i = level->max_height; i == 0; i--)
+    for (int i = level->max_height - 1; i >= 0; i--)
     {
-        for (int j = level->max_height; j == 0; j--)
+        for (int j = level->max_length - 1; j >= 0; j--)
         {
             if (level->candies[i][j] == NULL)
             {
-                int j = i - 1;
-                while (j != 0 && level->candies[j][j] != NULL)
+                int k = i - 1;
+                while (k >= 0 && level->candies[k][j] == NULL)
                 {
-                    j--;
+                    k--;
                 }
-                if (j == 0 && level->candies[j][j] == NULL)
+                if (k < 0)
                     remplis_colonne(i, j, level, manager);
                 else
-                {
                     move_candies(level, j, j, i - j, 0, manager, cursor);
-                }
             }
         }
     }
@@ -136,17 +134,6 @@ void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *mana
     level->candies[i][j] = target;
     level->candies[i + di][j + dj] = origin;
 
-    if (target != NULL)
-    {
-        target->i = i;
-        target->j = j;
-    }
-    if (origin != NULL)
-    {
-        origin->i = i + di;
-        origin->j = j + dj;
-    }
-    // Est ce qu'on ferait pas un affichage à chaque mouvement ?
     show_level(level, manager, cursor);
 }
 
