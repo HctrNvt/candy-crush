@@ -171,10 +171,6 @@ void show_level(Level *l, CandyManager *m, Cursor *c)
     refresh();
 }
 
-void update_adjacent(Level *level)
-{
-}
-
 void break_candy(Level *l, Player *p, int i, int j)
 {
     Candy *c = l->candies[i][j];

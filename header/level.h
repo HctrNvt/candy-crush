@@ -12,8 +12,8 @@ struct level_h
 {
     bool **can_be_placed; // Matrice de booléens
 
-    // candies[i][j] où i = ligne (0..max_height-1)
-    //                   j = colonne (0..max_length-1)
+    // candies[i][j] : i = ligne (0..max_height-1)
+    //                 j = colonne (0..max_length-1)
     Candy ***candies;
     int max_height; // Nombre de lignes
     int max_length; // Nombre de colonnes
@@ -23,7 +23,6 @@ typedef struct level_h Level;
 
 Level *create_level(char *str, int max_move);
 void free_Level(Level *l);
-void update_adjacent(Level *level); // Met à jour les bonbons adjacents aux autres.
 void show_level(Level *l, CandyManager *m, Cursor *c);
 void start_level(Level *l, Player *player);
 bool should_end(Level *l, Player *player); // Si le niveau est terminé ou pas (objectifs complétés/ plus de coup)
