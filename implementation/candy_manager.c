@@ -133,7 +133,6 @@ void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor, Player
 
 void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *manager, Cursor *cursor, Player *player)
 {
-    // Vérification des limites et des pointeurs nuls
     if (i + di < 0 || j + dj < 0 ||
         i + di >= level->max_height || j + dj >= level->max_length)
         return;
@@ -167,6 +166,18 @@ void set_candy(int i, int j, Speciality *s, CandyManager *manager, Level *level,
     level->candies[i][j] = bonbon;
 }
 
+int compte_consecutive(Level *level, int i, int j, int di, int dj, int color)
+{
+    int count = 0;
+
+    while (i + di * count < level->max_height &&
+           j + dj * count < level->max_length &&
+           level->candies[i + di * count][j + dj * count] != NULL &&
+           level->candies[i + di * count][j + dj * count]->color == color)
+        count++;
+    return count;
+}
+
 void check_break(Level *level, CandyManager *manager, Player *player)
 {
     int motif_vert;
@@ -183,25 +194,8 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             motif_vert = 0;
             motif_horiz = 0;
 
-            int a = 0;
-            while (j + a < level->max_length &&
-                   level->candies[i][j + a] != NULL &&
-                   candy_ij != NULL &&
-                   color == level->candies[i][j + a]->color)
-            {
-                motif_horiz++;
-                a++;
-            }
-
-            a = 0;
-            while (i + a < level->max_height &&
-                   level->candies[i + a][j] != NULL &&
-                   candy_ij != NULL &&
-                   color == level->candies[i + a][j]->color)
-            {
-                motif_vert++;
-                a++;
-            }
+            motif_horiz = compte_consecutive(level, i, j, 0, 1, color);
+            motif_vert = compte_consecutive(level, i, j, 1, 0, color);
 
             if (motif_vert >= 5)
             {
