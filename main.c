@@ -63,6 +63,7 @@ int main(int argc, char const *argv[])
     bool isMovingCandy = false;
 
     CandyManager *manager = create_CandyManager();
+    // height=6, length=19
     char *level_str = "###################\n###################\n###################\n###################\n###################\n###################";
 
     Level *level = create_level(level_str, 34);

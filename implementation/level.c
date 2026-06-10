@@ -31,10 +31,9 @@ int get_max_length(char *str)
             curr_line_len = 0;
         }
         else
-        {
             curr_line_len += 1;
-        }
     }
+    max_line_len = max(max_line_len, curr_line_len);
     return max_line_len;
 }
 
@@ -46,7 +45,7 @@ int get_max_height(char *str)
     for (int i = 0; i < len; i++)
         if (str[i] == '\n')
             height += 1;
-    
+
     if (len > 0 && str[len - 1] != '\n')
         height += 1;
     return height;
