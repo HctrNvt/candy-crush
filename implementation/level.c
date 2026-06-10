@@ -17,7 +17,7 @@ int max(int a, int b)
     return b;
 }
 
-// Récupère la ligne la plus longue
+// La ligne la plus longue
 int get_max_length(char *str)
 {
     int len = strlen(str);
@@ -37,7 +37,7 @@ int get_max_length(char *str)
     return max_line_len;
 }
 
-// Récupère la hauteur du fichier (en nombre de ligne)
+// La colonne la plus longue
 int get_max_height(char *str)
 {
     int len = strlen(str);
@@ -67,7 +67,7 @@ Level *create_level(char *str, int max_move)
         return NULL;
     }
 
-    l->can_be_placed = malloc(sizeof(char *) * l->max_height);
+    l->can_be_placed = malloc(sizeof(bool *) * l->max_height);
     if (l->can_be_placed == NULL)
     {
         free(l->candies);
@@ -78,7 +78,7 @@ Level *create_level(char *str, int max_move)
     for (int i = 0; i < l->max_height; i++)
     {
         l->candies[i] = malloc(sizeof(Candy *) * l->max_length);
-        l->can_be_placed[i] = malloc(sizeof(char) * l->max_length);
+        l->can_be_placed[i] = malloc(sizeof(bool) * l->max_length);
 
         for (int j = 0; j < l->max_length; j++)
         {
@@ -97,7 +97,7 @@ Level *create_level(char *str, int max_move)
         {
             if (j < l->max_length)
             {
-                l->can_be_placed[i][j] = (str[str_idx] == '#');
+                l->can_be_placed[i][j] = (str[str_idx] == '#'); // Si != # On n'a pas le droit de placer de bonbons
             }
             j++;
             str_idx++;
@@ -229,7 +229,7 @@ bool should_end(Level *l, Player *player)
 void end_level(Level *l, Player *player)
 {
 
-    // Qu'est ce qu'on peut faire de plus ?
+    // C'est la fin.
 
     free_Level(l);
 }

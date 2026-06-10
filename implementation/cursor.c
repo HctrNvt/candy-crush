@@ -4,12 +4,12 @@
 
 Cursor *create_Cursor(int i, int j, int max_i, int max_j)
 {
-    Cursor *c = malloc(sizeof(Cursor));
-    c->i = i;
-    c->j = j;
-    c->max_i = max_i;
-    c->max_j = max_j;
-    return c;
+    Cursor *cursor = malloc(sizeof(Cursor));
+    cursor->i = i;
+    cursor->j = j;
+    cursor->max_i = max_i;
+    cursor->max_j = max_j;
+    return cursor;
 }
 
 void free_Cursor(Cursor *c)
