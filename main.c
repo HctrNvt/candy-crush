@@ -16,6 +16,7 @@ void handle_move(int dx, int dy, Level *level, Cursor *cursor, Player *player, b
         *isMovingCandy = false;
         move_candies(level, cursor->i, cursor->j, dy, dx, m, cursor);
         check_break(level, m, player);
+        make_candy_drop(m, level, cursor);
     }
     else
     {

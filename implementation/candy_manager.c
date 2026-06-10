@@ -182,7 +182,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             motif_vert = 0;
             motif_horiz = 0;
 
-            int a = 1;
+            int a = 0;
             while (j + a < level->max_length - 1 &&
                    level->candies[i][j + a] != NULL &&
                    level->candies[i][j] != NULL &&
@@ -192,7 +192,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
                 a++;
             }
 
-            a = 1;
+            a = 0;
             while (i + a < level->max_height - 1 &&
                    level->candies[i + a][j] != NULL &&
                    level->candies[i][j] != NULL &&
@@ -212,30 +212,30 @@ void check_break(Level *level, CandyManager *manager, Player *player)
                 break_line_from(i, j, motif_horiz, level, manager, player);
                 set_candy(i, j, &manager->specialites[3], manager, level);
             }
-            // else if (motif_vert >= 4)
-            //{
-            //     break_col_from(i, j, motif_vert, level, manager, player);
-            //     set_candy(i, j, &manager->specialites[1], manager, level);
-            // }
-            // else if (motif_horiz >= 4)
-            //{
-            //     break_line_from(i, j, motif_horiz, level, manager, player);
-            //     set_candy(i, j, &manager->specialites[1], manager, level);
-            // }
-            // else if ((motif_vert == 3) && (motif_horiz == 3))
-            //{
-            //     break_line_from(i, j, 3, level, manager, player);
-            //     break_col_from(i, j, 3, level, manager, player);
-            //     set_candy(i, j, &manager->specialites[2], manager, level);
-            // }
-            // else if (motif_vert == 3)
-            //{
-            //     break_col_from(i, j, 3, level, manager, player);
-            // }
-            // else if (motif_horiz == 3)
-            //{
-            //     break_line_from(i, j, 3, level, manager, player);
-            // }
+            else if (motif_vert >= 4)
+            {
+                break_col_from(i, j, motif_vert, level, manager, player);
+                set_candy(i, j, &manager->specialites[1], manager, level);
+            }
+            else if (motif_horiz >= 4)
+            {
+                break_line_from(i, j, motif_horiz, level, manager, player);
+                set_candy(i, j, &manager->specialites[1], manager, level);
+            }
+            else if ((motif_vert == 3) && (motif_horiz == 3))
+            {
+                break_line_from(i, j, 3, level, manager, player);
+                break_col_from(i, j, 3, level, manager, player);
+                set_candy(i, j, &manager->specialites[2], manager, level);
+            }
+            else if (motif_vert == 3)
+            {
+                break_col_from(i, j, 3, level, manager, player);
+            }
+            else if (motif_horiz == 3)
+            {
+                break_line_from(i, j, 3, level, manager, player);
+            }
         }
     }
 }
