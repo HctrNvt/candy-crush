@@ -108,9 +108,6 @@ void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manag
     }
 }
 
-// On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
-// UTILISER : move pour déplacer les bonbons, permettra de check moins de possibilités.
-
 void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor, Player *player)
 {
     for (int i = level->max_height - 1; i >= 0; i--)
@@ -181,6 +178,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             Candy *candy_ij = level->candies[i][j];
             if (candy_ij == NULL)
                 break;
+            int color = candy_ij->color;
 
             motif_vert = 0;
             motif_horiz = 0;
@@ -189,7 +187,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             while (j + a < level->max_length &&
                    level->candies[i][j + a] != NULL &&
                    candy_ij != NULL &&
-                   candy_ij->color == level->candies[i][j + a]->color)
+                   color == level->candies[i][j + a]->color)
             {
                 motif_horiz++;
                 a++;
@@ -199,12 +197,12 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             while (i + a < level->max_height &&
                    level->candies[i + a][j] != NULL &&
                    candy_ij != NULL &&
-                   candy_ij->color == level->candies[i + a][j]->color)
+                   color == level->candies[i + a][j]->color)
             {
                 motif_vert++;
                 a++;
             }
-            int color = candy_ij->color;
+
             if (motif_vert >= 5)
             {
                 break_col_from(i, j, motif_vert, level, manager, player);
