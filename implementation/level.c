@@ -136,16 +136,26 @@ void free_Level(Level *l)
     free(l);
 }
 
+void show_border(int largeur)
+{
+    for (int i = 0; i < largeur; i++)
+    {
+        attron(COLOR_PAIR((i % 4) + 1));
+        printw("_");
+        attroff(COLOR_PAIR((i % 4) + 1));
+    }
+    printw("\n");
+}
+
 void show_interface(Level *l, Player *p)
 {
-    attron(COLOR_PAIR(1));
-    for (int i = 0; i < l->max_length; i++)
-        printw("_");
-    printw("\n");
-
+    int largeur = l->max_length;
     char titre[] = "BONBONS ECRASES";
-    int padding = (l->max_length - strlen(titre)) / 2;
-    for (int i = 0; i < padding; i++)
+    int marge = (l->max_length - strlen(titre)) / 2;
+
+    show_border(largeur);
+
+    for (int i = 0; i < marge; i++)
         printw(" ");
     printw("%s", titre);
     printw("\n");
@@ -154,10 +164,7 @@ void show_interface(Level *l, Player *p)
 
     printw("\n");
 
-    for (int i = 0; i < l->max_length; i++)
-        printw("_");
-    printw("\n");
-    attroff(COLOR_PAIR(1));
+    show_border(largeur);
 }
 
 void show_level(Level *l, CandyManager *m, Cursor *c, Player *p)
