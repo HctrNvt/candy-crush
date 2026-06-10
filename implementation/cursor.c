@@ -24,8 +24,8 @@ bool est_entre(int x, int a, int b)
 
 void move_Cursor(Cursor *cursor, int dx, int dy)
 {
-    if (est_entre(cursor->i + dx, 0, cursor->max_i - 1))
-        cursor->i += dx;
-    if (est_entre(cursor->j + dy, 0, cursor->max_j - 1))
-        cursor->j += dy;
+    if (est_entre(cursor->i + dy, 0, cursor->max_i - 1))
+        cursor->i += dy;
+    if (est_entre(cursor->j + dx, 0, cursor->max_j - 1))
+        cursor->j += dx;
 }

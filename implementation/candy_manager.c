@@ -126,14 +126,15 @@ void make_candy_drop(CandyManager *manager, Level *level)
 void move_candies(Level *level, int i, int j, int di, int dj)
 {
     // Vérification des limites et des pointeurs nuls
-    if (i + di < 0 || j + dj < 0 || i + di >= level->max_length || j + dj >= level->max_height)
+    if (i + di < 0 || j + dj < 0 ||
+        i + di >= level->max_length || j + dj >= level->max_height)
         return;
 
-    Candy *origin = level->candies[j][i];
-    Candy *target = level->candies[j + dj][i + di];
+    Candy *origin = level->candies[i][j];
+    Candy *target = level->candies[i + di][j + dj];
 
-    level->candies[j][i] = target;
-    level->candies[j + dj][i + di] = origin;
+    level->candies[i][j] = target;
+    level->candies[i + di][j + dj] = origin;
 
     if (target != NULL)
     {
@@ -145,6 +146,7 @@ void move_candies(Level *level, int i, int j, int di, int dj)
         origin->i = i + di;
         origin->j = j + dj;
     }
+    // Est ce qu'on ferait pas un affichage à chaque mouvement ?
 }
 
 // Casse la ligne depuis start_i inclu et fais n destruction en allant à DROITE
@@ -207,7 +209,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             else if (motif_horiz >= 5)
             {
                 break_line_from(i, j, motif_horiz, level, manager, player);
-                set_candy(i, j, &manager->specialites[4], manager, level);
+                set_candy(i, j, &manager->specialites[3], manager, level);
             }
             else if (motif_vert >= 4)
             {

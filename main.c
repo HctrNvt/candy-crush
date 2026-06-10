@@ -31,16 +31,16 @@ void move_to_input(int mv, Level *level, Cursor *cursor, Player *player, bool *i
         *isRUNNING = false;
         break;
     case 'z':
-        handle_move(-1, 0, level, cursor, player, isMovingCandy, m);
-        break;
-    case 'q':
         handle_move(0, -1, level, cursor, player, isMovingCandy, m);
         break;
+    case 'q':
+        handle_move(-1, 0, level, cursor, player, isMovingCandy, m);
+        break;
     case 's':
-        handle_move(1, 0, level, cursor, player, isMovingCandy, m);
+        handle_move(0, 1, level, cursor, player, isMovingCandy, m);
         break;
     case 'd':
-        handle_move(0, 1, level, cursor, player, isMovingCandy, m);
+        handle_move(1, 0, level, cursor, player, isMovingCandy, m);
         break;
     case ' ':
         *isMovingCandy = true;
@@ -83,7 +83,7 @@ int main(int argc, char const *argv[])
         show_level(level, manager, cursor);
         refresh();
 
-        int ch = getch(); // Attendre mv
+        int ch = getch(); // Attendre une touche avant de faire une nouvelle action
         move_to_input(ch, level, cursor, player, &isMovingCandy, &running, manager);
     }
 
