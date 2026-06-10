@@ -14,7 +14,7 @@ void handle_move(int dx, int dy, Level *level, Cursor *cursor, Player *player, b
     {
         player->move -= 1;
         *isMovingCandy = false;
-        move_candies(level, cursor->i, cursor->j, dx, dy);
+        move_candies(level, cursor->i, cursor->j, dy, dx, m, cursor);
         check_break(level, m, player);
     }
     else
@@ -66,7 +66,7 @@ int main(int argc, char const *argv[])
     char *level_str = "###################\n###################\n###################\n###################\n###################\n###################";
 
     Level *level = create_level(level_str, 34);
-    Cursor *cursor = create_Cursor(0, 0, level->max_length, level->max_height);
+    Cursor *cursor = create_Cursor(0, 0, level->max_height, level->max_length);
     Player *player = create_Player(level);
 
     fill_level(manager, level);
@@ -79,7 +79,6 @@ int main(int argc, char const *argv[])
 
     while (running)
     {
-        clear();
         show_level(level, manager, cursor);
         refresh();
 

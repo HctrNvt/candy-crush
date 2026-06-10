@@ -39,16 +39,17 @@ int get_max_length(char *str)
 }
 
 // Récupère la hauteur du fichier (en nombre de ligne)
-int get_height(char *str)
+int get_max_height(char *str)
 {
     int len = strlen(str);
-    int max_height = 1;
+    int height = 0;
     for (int i = 0; i < len; i++)
-    {
         if (str[i] == '\n')
-            max_height += 1;
-    }
-    return max_height;
+            height += 1;
+    
+    if (len > 0 && str[len - 1] != '\n')
+        height += 1;
+    return height;
 }
 
 // ----
@@ -58,7 +59,7 @@ Level *create_level(char *str, int max_move)
     Level *l = malloc(sizeof(Level));
     l->max_move = max_move;
     l->max_length = get_max_length(str);
-    l->max_height = get_height(str);
+    l->max_height = get_max_height(str);
 
     l->candies = malloc(sizeof(Candy **) * l->max_height);
     if (l->candies == NULL)
@@ -138,6 +139,7 @@ void free_Level(Level *l)
 
 void show_level(Level *l, CandyManager *m, Cursor *c)
 {
+    clear();
     for (int i = 0; i < l->max_height; i++)
     {
         for (int j = 0; j < l->max_length; j++)

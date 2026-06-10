@@ -99,7 +99,7 @@ void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manag
 // On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
 // UTILISER : move pour déplacer les bonbons, permettra de check moins de possibilités.
 
-void make_candy_drop(CandyManager *manager, Level *level)
+void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor)
 {
     for (int i = level->max_height; i == 0; i--)
     {
@@ -116,14 +116,15 @@ void make_candy_drop(CandyManager *manager, Level *level)
                     remplis_colonne(i, j, level, manager);
                 else
                 {
-                    move_candies(level, j, j, i - j, 0);
+                    move_candies(level, j, j, i - j, 0, manager, cursor);
                 }
             }
         }
     }
 }
 
-void move_candies(Level *level, int i, int j, int di, int dj)
+// Il faut changer le ehader
+void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *manager, Cursor *cursor)
 {
     // Vérification des limites et des pointeurs nuls
     if (i + di < 0 || j + dj < 0 ||
@@ -147,9 +148,9 @@ void move_candies(Level *level, int i, int j, int di, int dj)
         origin->j = j + dj;
     }
     // Est ce qu'on ferait pas un affichage à chaque mouvement ?
+    show_level(level, manager, cursor);
 }
 
-// Casse la ligne depuis start_i inclu et fais n destruction en allant à DROITE
 void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
 {
     for (int j = 0; j < n; j++)
@@ -157,7 +158,6 @@ void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager
             break_candy(level, player, start_i, start_j + j);
 }
 
-// Casse la colonne depuis start_j et fais n destruction en allant vers le BAS
 void break_col_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
 {
     for (int i = 0; i < n; i++)
@@ -184,57 +184,58 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             motif_horiz = 0;
 
             int a = 0;
-            while (j + a < level->max_height &&
-                   level->candies[i][j + a] != NULL &&
-                   level->candies[i][j]->color == level->candies[i][j + a]->color)
+            while (j + a < level->max_height //&&
+                                             // Erreur ici : (level->candies[i][j + a] != NULL || level->candies[i][j] != NULL) && // On arrête le paterne si un des trucs est null
+                                             // level->candies[i][j]->color == level->candies[i][j + a]->color
+            )
             {
                 motif_horiz++;
                 a++;
             }
+            //
+            // a = 0;
+            // while (i + a < level->max_length &&
+            //       level->candies[i + a][j] != NULL &&
+            //       level->candies[i][j]->color == level->candies[i + a][j]->color)
+            //{
+            //    motif_vert++;
+            //    a++;
+            //}
 
-            a = 0;
-            while (i + a < level->max_length &&
-                   level->candies[i + a][j] != NULL &&
-                   level->candies[i][j]->color == level->candies[i + a][j]->color)
-            {
-                motif_vert++;
-                a++;
-            }
-
-            if (motif_vert >= 5)
-            {
-                break_col_from(i, j, motif_vert, level, manager, player);
-                set_candy(i, j, &manager->specialites[3], manager, level);
-            }
-            else if (motif_horiz >= 5)
-            {
-                break_line_from(i, j, motif_horiz, level, manager, player);
-                set_candy(i, j, &manager->specialites[3], manager, level);
-            }
-            else if (motif_vert >= 4)
-            {
-                break_col_from(i, j, motif_vert, level, manager, player);
-                set_candy(i, j, &manager->specialites[1], manager, level);
-            }
-            else if (motif_horiz >= 4)
-            {
-                break_line_from(i, j, motif_horiz, level, manager, player);
-                set_candy(i, j, &manager->specialites[1], manager, level);
-            }
-            else if ((motif_vert == 3) && (motif_horiz == 3))
-            {
-                break_line_from(i, j, 3, level, manager, player);
-                break_col_from(i, j, 3, level, manager, player);
-                set_candy(i, j, &manager->specialites[2], manager, level);
-            }
-            else if (motif_vert == 3)
-            {
-                break_col_from(i, j, 3, level, manager, player);
-            }
-            else if (motif_horiz == 3)
-            {
-                break_line_from(i, j, 3, level, manager, player);
-            }
+            // if (motif_vert >= 5)
+            // {
+            //     break_col_from(i, j, motif_vert, level, manager, player);
+            //     set_candy(i, j, &manager->specialites[3], manager, level);
+            // }
+            // else if (motif_horiz >= 5)
+            // {
+            //     break_line_from(i, j, motif_horiz, level, manager, player);
+            //     set_candy(i, j, &manager->specialites[3], manager, level);
+            // }
+            // else if (motif_vert >= 4)
+            // {
+            //     break_col_from(i, j, motif_vert, level, manager, player);
+            //     set_candy(i, j, &manager->specialites[1], manager, level);
+            // }
+            // else if (motif_horiz >= 4)
+            // {
+            //     break_line_from(i, j, motif_horiz, level, manager, player);
+            //     set_candy(i, j, &manager->specialites[1], manager, level);
+            // }
+            // else if ((motif_vert == 3) && (motif_horiz == 3))
+            // {
+            //     break_line_from(i, j, 3, level, manager, player);
+            //     break_col_from(i, j, 3, level, manager, player);
+            //     set_candy(i, j, &manager->specialites[2], manager, level);
+            // }
+            // else if (motif_vert == 3)
+            // {
+            //     break_col_from(i, j, 3, level, manager, player);
+            // }
+            // else if (motif_horiz == 3)
+            // {
+            //     break_line_from(i, j, 3, level, manager, player);
+            // }
         }
     }
 }
