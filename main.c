@@ -82,7 +82,6 @@ int main(int argc, char const *argv[])
     while (running)
     {
         show_level(level, manager, cursor, player);
-        refresh();
 
         int ch = getch(); // Attendre une touche avant de faire une nouvelle action
         move_to_input(ch, level, cursor, player, &isMovingCandy, &running, manager);

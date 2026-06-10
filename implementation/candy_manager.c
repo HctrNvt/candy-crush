@@ -191,9 +191,6 @@ void check_break(Level *level, CandyManager *manager, Player *player)
                 break;
             int color = candy_ij->color;
 
-            motif_vert = 0;
-            motif_horiz = 0;
-
             motif_horiz = compte_consecutive(level, i, j, 0, 1, color);
             motif_vert = compte_consecutive(level, i, j, 1, 0, color);
 
