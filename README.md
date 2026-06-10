@@ -21,3 +21,6 @@ Alignez 3 bonbons ou plus du même type horizontalement ou verticalement pour le
 - `=` : Bonbon zèbre, explose les bonbons sur la même ligne que lui.
 - `#` : Bonbon carré, explose les bonbons autour de lui, même ceux en diagonales.
 - `@` : Bonbon disco, explose les bonbons de la même couleur que celui avec lequel il est échangé.
+
+# Compiler
+> gcc *.c ./implementation/*.c  -lncurses -Wall
