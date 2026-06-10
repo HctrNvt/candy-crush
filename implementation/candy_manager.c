@@ -32,7 +32,7 @@ void disco_effect(Candy *candy, Level *level, Player *player, int i, int j)
 
 void carre_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
-    // TODO // Elimine tous les bonbons autour
+    // TODO
 }
 
 void normal_effect(Candy *candy, Level *level, Player *player, int i, int j)
@@ -50,9 +50,9 @@ CandyManager *create_CandyManager()
 
     manager->specialites = malloc(sizeof(Speciality) * SPECIALITY_N);
     manager->specialites[0] = *create_Speciality('0', normal_effect, 100);
-    manager->specialites[1] = *create_Speciality('=', zebra_effect, 300);  // A terminer
-    manager->specialites[2] = *create_Speciality('#', carre_effect, 300);  // A terminer
-    manager->specialites[3] = *create_Speciality('@', disco_effect, 1000); // A terminer
+    manager->specialites[1] = *create_Speciality('=', zebra_effect, 400);
+    manager->specialites[2] = *create_Speciality('#', carre_effect, 800); // A terminer
+    manager->specialites[3] = *create_Speciality('@', disco_effect, 600);
 
     return manager;
 }
@@ -110,7 +110,7 @@ void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manag
 // On parcourt la matrice de bonbons et dès qu'on trouve un trou on fait descendre d'un étage le bonbon au dessus s'il existe sinon on prend celui encore plus haut.
 // UTILISER : move pour déplacer les bonbons, permettra de check moins de possibilités.
 
-void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor)
+void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor, Player *player)
 {
     for (int i = level->max_height - 1; i >= 0; i--)
     {
@@ -126,14 +126,14 @@ void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor)
                 if (k < 0)
                     remplis_colonne(i, j, level, manager);
                 else
-                    move_candies(level, k, j, i - k, 0, manager, cursor);
+                    move_candies(level, k, j, i - k, 0, manager, cursor, player);
             }
         }
     }
-    show_level(level, manager, cursor);
+    show_level(level, manager, cursor, player);
 }
 
-void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *manager, Cursor *cursor)
+void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *manager, Cursor *cursor, Player *player)
 {
     // Vérification des limites et des pointeurs nuls
     if (i + di < 0 || j + dj < 0 ||
@@ -146,7 +146,7 @@ void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *mana
     level->candies[i][j] = target;
     level->candies[i + di][j + dj] = origin;
 
-    show_level(level, manager, cursor);
+    show_level(level, manager, cursor, player);
 }
 
 void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
@@ -182,7 +182,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             motif_horiz = 0;
 
             int a = 0;
-            while (j + a < level->max_length - 1 &&
+            while (j + a < level->max_length &&
                    level->candies[i][j + a] != NULL &&
                    level->candies[i][j] != NULL &&
                    level->candies[i][j]->color == level->candies[i][j + a]->color)
@@ -192,7 +192,7 @@ void check_break(Level *level, CandyManager *manager, Player *player)
             }
 
             a = 0;
-            while (i + a < level->max_height - 1 &&
+            while (i + a < level->max_height &&
                    level->candies[i + a][j] != NULL &&
                    level->candies[i][j] != NULL &&
                    level->candies[i][j]->color == level->candies[i + a][j]->color)

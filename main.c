@@ -14,9 +14,9 @@ void handle_move(int dx, int dy, Level *level, Cursor *cursor, Player *player, b
     {
         player->move -= 1;
         *isMovingCandy = false;
-        move_candies(level, cursor->i, cursor->j, dy, dx, m, cursor);
+        move_candies(level, cursor->i, cursor->j, dy, dx, m, cursor, player);
         check_break(level, m, player);
-        make_candy_drop(m, level, cursor);
+        make_candy_drop(m, level, cursor, player);
     }
     else
     {
@@ -81,7 +81,7 @@ int main(int argc, char const *argv[])
 
     while (running)
     {
-        show_level(level, manager, cursor);
+        show_level(level, manager, cursor, player);
         refresh();
 
         int ch = getch(); // Attendre une touche avant de faire une nouvelle action

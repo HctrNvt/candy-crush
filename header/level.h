@@ -23,7 +23,7 @@ typedef struct level_h Level;
 
 Level *create_level(char *str, int max_move);
 void free_Level(Level *l);
-void show_level(Level *l, CandyManager *m, Cursor *c);
+void show_level(Level *l, CandyManager *m, Cursor *c, Player *p);
 void start_level(Level *l, Player *player);
 bool should_end(Level *l, Player *player); // Si le niveau est terminé ou pas (objectifs complétés/ plus de coup)
 void end_level(Level *l, Player *player);

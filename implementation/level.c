@@ -136,9 +136,35 @@ void free_Level(Level *l)
     free(l);
 }
 
-void show_level(Level *l, CandyManager *m, Cursor *c)
+void show_interface(Level *l, Player *p)
+{
+    attron(COLOR_PAIR(1));
+    for (int i = 0; i < l->max_length; i++)
+        printw("_");
+    printw("\n");
+
+    char titre[] = "BONBONS ECRASES";
+    int padding = (l->max_length - strlen(titre)) / 2;
+    for (int i = 0; i < padding; i++)
+        printw(" ");
+    printw("%s", titre);
+    printw("\n");
+
+    printw(" %d/%d | %d¤", p->move, l->max_move, p->score);
+
+    printw("\n");
+
+    for (int i = 0; i < l->max_length; i++)
+        printw("_");
+    printw("\n");
+    attroff(COLOR_PAIR(1));
+}
+
+void show_level(Level *l, CandyManager *m, Cursor *c, Player *p)
 {
     clear();
+    show_interface(l, p);
+
     for (int i = 0; i < l->max_height; i++)
     {
         for (int j = 0; j < l->max_length; j++)
@@ -167,7 +193,6 @@ void show_level(Level *l, CandyManager *m, Cursor *c)
         }
         printw("\n");
     }
-
     refresh();
 }
 
@@ -176,7 +201,7 @@ void break_candy(Level *l, Player *p, int i, int j)
     if (l->candies[i][j] == NULL)
         return;
     Candy *candy = l->candies[i][j];
-    l->candies[i][j] = NULL; // bye bye
+    l->candies[i][j] = NULL;
 
     p->score += candy->s->points;
 
