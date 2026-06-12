@@ -178,10 +178,57 @@ int compte_consecutive(Level *level, int i, int j, int di, int dj, int color)
     return count;
 }
 
-void check_break(Level *level, CandyManager *manager, Player *player)
+// On suppose que les deux matrices sont de même taille
+bool est_pareil(Candy ***candies1, Candy ***candies2, int maxi, int maxj)
+{
+    for (int i = 0; i < maxi; i++)
+    {
+        for (int j = 0; j < maxj; j++)
+        {
+            Candy *a = candies1[i][j];
+            Candy *b = candies2[i][j];
+            if (a->color != b->color)
+                return false;
+        }
+    }
+    return true;
+}
+
+Candy ***copie(Candy ***candies, int maxi, int maxj)
+{
+    Candy ***candie_copie = malloc(sizeof(Candy **) * maxi);
+    for (int i = 0; i < maxi; i++)
+    {
+        candie_copie[i] = malloc(sizeof(Candy *) * maxj);
+        for (int j = 0; j < maxj; j++)
+        {
+            if (candies[i][j] != NULL)
+                candie_copie[i][j] = create_Candy(candies[i][j]->color,
+                                                  candies[i][j]->s);
+        }
+    }
+    return candie_copie;
+}
+
+void free_candies(Candy ***candies, int maxi, int maxj)
+{
+    for (int i = 0; i < maxi; i++)
+    {
+        for (int j = 0; j < maxj; j++)
+        {
+            if (candies[i][j] != NULL)
+                free_Candy(candies[i][j]);
+        }
+        free(candies[i]);
+    }
+    free(candies);
+}
+
+void check_break(Level *level, CandyManager *manager, Player *player, Cursor *cursor)
 {
     int motif_vert;
     int motif_horiz;
+    Candy ***candies1 = copie(level->candies, level->max_height, level->max_length);
     for (int i = 0; i < level->max_height; i++)
     {
         for (int j = 0; j < level->max_length; j++)
@@ -229,5 +276,12 @@ void check_break(Level *level, CandyManager *manager, Player *player)
                 break_line_from(i, j, 3, level, manager, player);
             }
         }
+    }
+    make_candy_drop(manager, level, cursor, player);
+    if (!est_pareil(candies1, level->candies,
+                    level->max_height, level->max_length))
+    {
+        free_candies(candies1, level->max_height, level->max_length);
+        check_break(level, manager, player, cursor);
     }
 }
