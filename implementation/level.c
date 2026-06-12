@@ -226,10 +226,17 @@ bool should_end(Level *l, Player *player)
     return player->move <= 0;
 }
 
+void show_end(Player *p)
+{
+    clear();
+    show_border(30);
+
+    printw("\n\n\n\n     Vous avez gagnez !\n     Vous avez : %d points !\n\n\n", p->score);
+
+    show_border(30);
+}
+
 void end_level(Level *l, Player *player)
 {
-
-    // C'est la fin.
-
-    free_Level(l);
+    show_end(player);
 }

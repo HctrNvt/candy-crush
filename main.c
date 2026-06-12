@@ -84,6 +84,11 @@ int main(int argc, char const *argv[])
     {
         show_level(level, manager, cursor, player);
 
+        if (should_end(level, player))
+        {
+            running = false;
+            end_level(level, player);
+        }
         int ch = getch(); // Attendre une touche avant de faire une nouvelle action
         move_to_input(ch, level, cursor, player, &isMovingCandy, &running, manager);
     }
