@@ -70,7 +70,7 @@ int main(int argc, char const *argv[])
     Cursor *cursor = create_Cursor(0, 0, level->max_height, level->max_length);
     Player *player = create_Player(level);
 
-    fill_level(manager, level);
+    make_candy_drop(manager, level, cursor, player);
     check_break(level, manager, player, cursor);
     player->score = 0;
 

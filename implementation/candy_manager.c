@@ -87,31 +87,6 @@ Candy *random_candy(int i, int j, CandyManager *manager)
     return create_Candy(color, s);
 }
 
-// Remplace si bonbon existe déjà
-void fill_level(CandyManager *manager, Level *l)
-{
-    for (int i = 0; i < l->max_height; i++)
-    {
-        for (int j = 0; j < l->max_length; j++)
-        {
-            l->candies[i][j] = random_candy(i, j, manager);
-        }
-    }
-}
-
-bool is_filled(Level *l)
-{
-    for (int i = 0; i < l->max_height; i++)
-    {
-        for (int j = 0; j < l->max_length; j++)
-        {
-            if (l->can_be_placed[i][j] && l->candies[i][j] == NULL)
-                return false;
-        }
-    }
-    return true;
-}
-
 void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manager)
 {
     for (int k = debut_ligne; k >= 0; k--) // En remontant
