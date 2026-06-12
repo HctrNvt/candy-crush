@@ -4,6 +4,7 @@
 #include "../header/speciality.h"
 #include "../header/candy.h"
 #include "../header/level.h"
+#include "../header/player.h"
 
 #include <ncurses.h>
 
@@ -33,7 +34,18 @@ void disco_effect(Candy *candy, Level *level, Player *player, int i, int j)
 
 void carre_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
-    // TODO
+    player->move += 3;
+    for (int x = -1; x < 2; x++)
+    {
+        for (int y = -1; y < 2; y++)
+        {
+            if (i + x >= 0 && i + x < level->max_height &&
+                j + y >= 0 && j + y < level->max_length)
+            {
+                break_candy(level, player, i + x, j + y);
+            }
+        }
+    }
 }
 
 void normal_effect(Candy *candy, Level *level, Player *player, int i, int j)

@@ -66,11 +66,13 @@ int main(int argc, char const *argv[])
     // height=6, length=19
     char *level_str = "###################\n###################\n###################\n###################\n###################\n###################";
 
-    Level *level = create_level(level_str, 34);
+    Level *level = create_level(level_str, 20);
     Cursor *cursor = create_Cursor(0, 0, level->max_height, level->max_length);
     Player *player = create_Player(level);
 
     fill_level(manager, level);
+    check_break(level, manager, player, cursor);
+    player->score = 0;
 
     start_color(); // Active les couleurs
     for (int i = 0; i < 4; i++)
