@@ -182,7 +182,7 @@ void show_level(Level *l, CandyManager *m, Cursor *c, Player *p)
 
             if (l->candies[i][j] == NULL)
             {
-                color_pair = 0; // Tester 6 vu que ça affiche pas du gris
+                color_pair = 0;
                 symbol = '/';
             }
             else
@@ -229,11 +229,11 @@ bool should_end(Level *l, Player *player)
 void show_end(Player *p)
 {
     clear();
-    show_border(30);
+    show_border(35);
 
     printw("\n\n\n\n     Vous avez gagnez !\n     Vous avez : %d points !\n\n\n", p->score);
 
-    show_border(30);
+    show_border(35);
 }
 
 void end_level(Level *l, Player *player)
