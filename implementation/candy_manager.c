@@ -91,7 +91,7 @@ Candy *random_candy(int i, int j, CandyManager *manager)
 
     return create_Candy(color, s);
 }
-
+//Fait pas Mahaut et Hector
 void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manager)
 {
     for (int k = debut_ligne; k >= 0; k--) // En remontant
@@ -99,7 +99,7 @@ void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manag
         l->candies[k][colonne] = random_candy(k, colonne, manager);
     }
 }
-
+//Fait par Mahaut et Hector
 void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor, Player *player)
 {
     for (int i = level->max_height - 1; i >= 0; i--)
@@ -137,7 +137,7 @@ void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *mana
 
     show_level(level, manager, cursor, player);
 }
-
+// Mahaut et Hector
 void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
 {
     for (int j = 0; j < n; j++)
@@ -171,7 +171,7 @@ int compte_consecutive(Level *level, int i, int j, int di, int dj, int color)
     return count;
 }
 
-// On suppose que les deux matrices sont de même taille
+// On suppose que les deux matrices sont de même taille //Mahaut et Hector
 bool est_pareil(Candy ***candies1, Candy ***candies2, int maxi, int maxj)
 {
     for (int i = 0; i < maxi; i++)
@@ -219,7 +219,7 @@ void free_candies(Candy ***candies, int maxi, int maxj)
 }
 
 
-// Mahaut & Julien
+// Mahaut
 void check_break(Level *level, CandyManager *manager, Player *player, Cursor *cursor)
 {
     int motif_vert;
@@ -233,7 +233,7 @@ void check_break(Level *level, CandyManager *manager, Player *player, Cursor *cu
             if (candy_ij == NULL)
                 break;
             int color = candy_ij->color;
-
+-
             motif_horiz = compte_consecutive(level, i, j, 0, 1, color);
             motif_vert = compte_consecutive(level, i, j, 1, 0, color);
 
