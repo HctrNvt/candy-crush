@@ -11,7 +11,7 @@
 int SPECIALITY_N = 4;
 
 // Fait par Julien
-
+// Différents effets des bonbons spéciaux
 void zebra_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
     for (int n = 0; n < level->max_length; n++)
@@ -91,7 +91,7 @@ Candy *random_candy(int i, int j, CandyManager *manager)
 
     return create_Candy(color, s);
 }
-//Fait pas Mahaut et Hector
+//Fait par Hector et Mahaut
 void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manager)
 {
     for (int k = debut_ligne; k >= 0; k--) // En remontant
@@ -99,7 +99,7 @@ void remplis_colonne(int debut_ligne, int colonne, Level *l, CandyManager *manag
         l->candies[k][colonne] = random_candy(k, colonne, manager);
     }
 }
-//Fait par Mahaut et Hector
+//Fait par Hector et Mahaut
 void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor, Player *player)
 {
     for (int i = level->max_height - 1; i >= 0; i--)
@@ -123,13 +123,15 @@ void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor, Player
     show_level(level, manager, cursor, player);
 }
 
-void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *manager, Cursor *cursor, Player *player)
+void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *manager, Cursor *cursor, Player *player) 
 {
+    // On vérifie si le déplacement n'est pas hors-map
     if (i + di < 0 || j + dj < 0 ||
         i + di >= level->max_height || j + dj >= level->max_length)
         return;
-
-    Candy *origin = level->candies[i][j];
+    
+    // Echange du bonbon sélectionné avec le bonbon dans la direction souhaité
+    Candy *origin = level->candies[i][j]; 
     Candy *target = level->candies[i + di][j + dj];
 
     level->candies[i][j] = target;
@@ -137,7 +139,7 @@ void move_candies(Level *level, int i, int j, int di, int dj, CandyManager *mana
 
     show_level(level, manager, cursor, player);
 }
-// Mahaut et Hector
+// Hector et Mahaut
 void break_line_from(int start_i, int start_j, int n, Level *level, CandyManager *manager, Player *player)
 {
     for (int j = 0; j < n; j++)
@@ -171,7 +173,8 @@ int compte_consecutive(Level *level, int i, int j, int di, int dj, int color)
     return count;
 }
 
-// On suppose que les deux matrices sont de même taille //Mahaut et Hector
+// Hector et Mahaut
+// On suppose que les deux matrices sont de même taille 
 bool est_pareil(Candy ***candies1, Candy ***candies2, int maxi, int maxj)
 {
     for (int i = 0; i < maxi; i++)
@@ -219,7 +222,7 @@ void free_candies(Candy ***candies, int maxi, int maxj)
 }
 
 
-// Mahaut
+// Mahaut & Hector (& Julien)
 void check_break(Level *level, CandyManager *manager, Player *player, Cursor *cursor)
 {
     int motif_vert;
@@ -233,7 +236,7 @@ void check_break(Level *level, CandyManager *manager, Player *player, Cursor *cu
             if (candy_ij == NULL)
                 break;
             int color = candy_ij->color;
--
+            
             motif_horiz = compte_consecutive(level, i, j, 0, 1, color);
             motif_vert = compte_consecutive(level, i, j, 1, 0, color);
 
