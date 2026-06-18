@@ -64,6 +64,7 @@ int main(int argc, char const *argv[])
 
     CandyManager *manager = create_CandyManager();
     // height=6, length=19
+    // Niveau sous forme de texte
     char *level_str = "###################\n###################\n###################\n###################\n###################\n###################";
 
     Level *level = create_level(level_str, 20);
@@ -74,7 +75,8 @@ int main(int argc, char const *argv[])
     check_break(level, manager, player, cursor);
     player->score = 0;
 
-    start_color(); // Active les couleurs
+    // Active les couleurs
+    start_color(); 
     for (int i = 0; i < 4; i++)
     {
         init_pair(i + 1, COLOR_BLACK, manager->colors[i]); // Ne pas utiliser i = 0 : réserver pour le terminal...

@@ -17,6 +17,7 @@ int max(int a, int b)
     return b;
 }
 
+// Hector
 // La ligne la plus longue
 int get_max_length(char *str)
 {
@@ -136,6 +137,7 @@ void free_Level(Level *l)
     free(l);
 }
 
+// Affichage d'une ligne de couleurs
 void show_border(int largeur)
 {
     for (int i = 0; i < largeur; i++)
@@ -147,6 +149,7 @@ void show_border(int largeur)
     printw("\n");
 }
 
+// Interface au dessus du niveau
 void show_interface(Level *l, Player *p)
 {
     int largeur = l->max_length;
@@ -167,6 +170,7 @@ void show_interface(Level *l, Player *p)
     show_border(largeur);
 }
 
+// Affichage du niveau en entier (interface & bonbons)
 void show_level(Level *l, CandyManager *m, Cursor *c, Player *p)
 {
     clear();
@@ -180,7 +184,7 @@ void show_level(Level *l, CandyManager *m, Cursor *c, Player *p)
             char symbol;
             int color_pair;
 
-            if (l->candies[i][j] == NULL)
+            if (l->candies[i][j] == NULL) // On affiche le symbole "vide"
             {
                 color_pair = 0;
                 symbol = '/';

@@ -10,6 +10,8 @@
 
 int SPECIALITY_N = 4;
 
+// Fait par Julien
+
 void zebra_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
     for (int n = 0; n < level->max_length; n++)
@@ -32,6 +34,7 @@ void disco_effect(Candy *candy, Level *level, Player *player, int i, int j)
     }
 }
 
+
 void carre_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
     player->move += 3;
@@ -52,6 +55,8 @@ void normal_effect(Candy *candy, Level *level, Player *player, int i, int j)
 {
     // A laisser vide
 }
+
+// ---
 
 CandyManager *create_CandyManager()
 {
@@ -101,7 +106,7 @@ void make_candy_drop(CandyManager *manager, Level *level, Cursor *cursor, Player
     {
         for (int j = level->max_length - 1; j >= 0; j--)
         {
-            if (level->candies[i][j] == NULL)
+            if (level->candies[i][j] == NULL) // On fait tomber les bonbons
             {
                 int k = i - 1;
                 while (k >= 0 && level->candies[k][j] == NULL)
@@ -153,6 +158,7 @@ void set_candy(int i, int j, Speciality *s, CandyManager *manager, Level *level,
     level->candies[i][j] = bonbon;
 }
 
+// Compte le nombre de couleur consécutive avec di,dj le déplacement fais à chaque itération
 int compte_consecutive(Level *level, int i, int j, int di, int dj, int color)
 {
     int count = 0;
@@ -181,6 +187,7 @@ bool est_pareil(Candy ***candies1, Candy ***candies2, int maxi, int maxj)
     return true;
 }
 
+// Nouvelle matrice qui n'a plus de lien avec l'anciene (Hector)
 Candy ***copie(Candy ***candies, int maxi, int maxj)
 {
     Candy ***candie_copie = malloc(sizeof(Candy **) * maxi);
@@ -211,6 +218,8 @@ void free_candies(Candy ***candies, int maxi, int maxj)
     free(candies);
 }
 
+
+// Mahaut & Julien
 void check_break(Level *level, CandyManager *manager, Player *player, Cursor *cursor)
 {
     int motif_vert;
