@@ -235,7 +235,7 @@ void show_end(Player *p)
     clear();
     show_border(35);
 
-    printw("\n\n\n\n     Vous avez gagnez !\n     Vous avez : %d points !\n\n\n", p->score);
+    printw("\n\n\n\n     Vous avez gagné !\n     Vous avez : %d points !\n\n\n", p->score);
 
     show_border(35);
 }
