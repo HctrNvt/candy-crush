@@ -8,7 +8,7 @@ Utilisez les touches z, q, s, d pour déplacer le curseur jusqu'au bonbon que vo
 2. Appuyez sur ESPACE pour sélectionner le bonbon courant, puis :
 
 Appuyez sur ENTRÉE pour activer le mode échange
-Choisissez une direction (flèches directionnelles) pour échanger avec le bonbon adjacent :
+Choisissez une direction pour échanger avec le bonbon adjacent :
 
 - z : échange vers le haut
 - s : échange vers le bas
