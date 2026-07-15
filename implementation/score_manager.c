@@ -3,66 +3,122 @@
 
 #include "../header/score_manager.h"
 
-struct str
+typedef struct
 {
-    int len;
-    unsigned char *data;
-};
-typedef struct str string;
+    int nb_lignes;
+    int max_caractere_par_ligne;
+} DimensionsFichier;
 
-string *createString(char tab[], int n)
+DimensionsFichier mesurer_fichier(const char *nom_fichier)
 {
-    string *str = malloc(sizeof(string));
-    str->len = n;
-    for (int i = 0; i < n; i++)
+    DimensionsFichier dim = {0, 0};
+
+    FILE *fichier = fopen(nom_fichier, "r");
+    if (fichier == NULL)
     {
-        str->data[i] = tab[i];
+        perror("Erreur d'ouverture du fichier pour mesure");
+        return dim;
     }
-    return str;
+
+    int c;
+    int longueur_courante = 0;
+    int a_des_caracteres = 0;
+
+    while ((c = fgetc(fichier)) != EOF)
+    {
+        a_des_caracteres = 1;
+
+        if (c == '\n')
+        {
+            dim.nb_lignes++;
+            if (longueur_courante > dim.max_caractere_par_ligne)
+            {
+                dim.max_caractere_par_ligne = longueur_courante;
+            }
+            longueur_courante = 0; // Reset pour la ligne suivante
+        }
+        else
+            longueur_courante++;
+    }
+
+    if (longueur_courante > 0)
+    {
+        dim.nb_lignes++;
+        if (longueur_courante > dim.max_caractere_par_ligne)
+            dim.max_caractere_par_ligne = longueur_courante;
+    }
+    else if (dim.nb_lignes == 0 && a_des_caracteres)
+        dim.nb_lignes = 1;
+
+    fclose(fichier);
+    return dim;
 }
 
-string *cat(string s, unsigned char c)
+char **createScoreBuffer(DimensionsFichier dim)
 {
-    // Concaténation d'un string avec un char
-    string str;
-    str.len = s.len + 1;
-    str.data = malloc(str.len * sizeof(unsigned char));
-    for (size_t i = 0; i < str.len - 2; i++)
+    char **tab = malloc(sizeof(char *) * dim.nb_lignes);
+    for (int i = 0; i < dim.nb_lignes; i++)
     {
-        str.data[i] = s.data[i];
+        tab[i] = malloc(sizeof(char) * (dim.max_caractere_par_ligne + 1)); // +1 : pour le caractère sentinel
     }
-    str.data[s.len] = c;
-    return &str;
+    return tab;
 }
-string *cat(string s1, string s2)
+
+void freeScoreBuffer(char **tab, DimensionsFichier dim)
 {
-    string str;
-    str.len = s1.len + s2.len;
-    str.data = malloc(str.len * sizeof(unsigned char));
-    for (int i = 0; i < s1.len; i++)
+    for (int i = 0; i < dim.nb_lignes; i++)
     {
-        str.data[i] = s1.data[i];
+        free(tab[i]);
     }
-    for (int i = 0; i < s2.len; i++)
-    {
-        str.data[i] = s2.data[i];
-    }
-    return &str;
+    free(tab);
 }
-char *getFileContent(ScoreManager score_manager)
+
+char **getFileContent(ScoreManager score_manager)
 {
     FILE *file = fopen(score_manager.nomFichier, "r");
-    
+
+    DimensionsFichier dim = mesurer_fichier(score_manager.nomFichier);
+    // Chaque ligne est associé à un joueur : nomJoueur,score
+    char **tab = createScoreBuffer(dim);
+    char ch;
+    int i = 0;
+    int y = 0;
+    while ((ch = fgetc(file)) != EOF)
+    {
+        if (ch == '\n')
+        {
+            tab[i][y] = '\0';
+            y = 0;
+            i++;
+        }
+        else
+        {
+            tab[i][y] = ch;
+            y++;
+        }
+    }
+    return tab;
 }
 
 void addScoreToFichier(ScoreManager scoreManager, int score)
 {
 }
 
-void getBestScores(int tab[], int n)
+// Le tableau à modifier et donner les n premiers scores
+void setBestScores(int *tab[], int n, char **scoreBuffer)
 {
 }
 
-void getScores(int tab[], int n)
+int getScoreFromLine(char *line)
 {
+    // La fonction n'est pas terminé.
+    return atoi(line);
+}
+
+// Récupère les n premières lignes du fichier
+void setScores(int *tab[], int n, char **scoreBuffer)
+{
+    for (int i = 0; i < n; i++)
+    {
+    }
 }
