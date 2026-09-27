@@ -23,4 +23,4 @@ Alignez 3 bonbons ou plus du même type horizontalement ou verticalement pour le
 - `@` : Bonbon disco, explose les bonbons de la même couleur que la sienne.
 
 # Compiler
-> gcc *.c ./implementation/*.c  -lncurses -Wall
+> `gcc *.c ./implementation/*.c  -lncurses -Wall`
